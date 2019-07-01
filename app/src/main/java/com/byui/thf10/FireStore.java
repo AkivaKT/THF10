@@ -45,7 +45,6 @@ public class FireStore {
         // Update.put("Price", Price);
 
         for (JsonConvertible i : Product) {
-            i.setId(IdGenerator.generateID());
 
             myRef.add(i)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -75,9 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         target.add(pr2);
         target.add(pr3);
 
-        for (JsonConvertible i : target) {
-            i.setId(IdGenerator.generateID());
-        }
 
 
 
