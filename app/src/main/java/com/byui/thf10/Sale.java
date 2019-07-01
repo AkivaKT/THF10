@@ -9,9 +9,9 @@ public class Sale extends JsonConvertible {
     }
 
     // data
-    public int product_id;
-    public int price_id;
-    public int account_id;
+    public Product product;
+    public Price price;
+    public Account account;
     public Date date;
     public int amount;
     public boolean discount;
@@ -20,9 +20,9 @@ public class Sale extends JsonConvertible {
 
     //getters
 
-    public int getPrice_id(){ return price_id; }
-    public int getAccount_id(){ return account_id; }
-    public int getProduct_id(){ return product_id; }
+    public Price getPrice_id(){ return price; }
+    public Account getAccount_id(){ return account; }
+    public Product getProduct_id(){ return product; }
     public Date getDate() {
         return date;
     }
@@ -41,9 +41,9 @@ public class Sale extends JsonConvertible {
 
     //setters
 
-    public void setPrice_id(int price_id){ this.price_id = price_id; }
-    public void setProduct_id(int product_id){ this.product_id = product_id; }
-    public void setAccount_id(int account_id){ this.account_id = account_id; }
+    public void setPrice_id(Price price){ this.price = price; }
+    public void setProduct_id(Product product){ this.product = product; }
+    public void setAccount_id(Account account){ this.account = account; }
     public void setCreated_by(int created_by) {
         this.created_by = created_by;
     }
