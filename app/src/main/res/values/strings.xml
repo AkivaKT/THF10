@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">THF</string>
+    <string name="pricec">Create New Price</string>
+    <string name="salec">Record New Sale</string>
+    <string name="productc">Create NEw Product</string>
+
+    <string name="priced">Delete Price</string>
+    <string name="saled">Delete Sale</string>
+    <string name="productd">Delete Product</string>
+
+    <string name="pushc">Push changes</string>
+    <string name="newrecord">New Record</string>
+
+    <string-array name="numbers">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+    </string-array>
+
+    <string-array name="numbers1">
+        <item>$10</item>
+        <item>$20</item>
+        <item>$30</item>
+        <item>$40</item>
+        <item>$50</item>
+    </string-array>
+</resources>
