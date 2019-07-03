@@ -27,10 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        FireStore f1 = new FireStore(database);
-        f1.setup();
         Product pr1 = new Product();
 
         pr1.setQuantity(1);
@@ -66,9 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         target.add(pr3);
 
 
-
-
-        f1.StoreJson(target);
 
         /*
         CollectionReference myRef = database.collection("Price");

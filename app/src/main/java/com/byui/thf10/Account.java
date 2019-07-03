@@ -1,17 +1,17 @@
 package com.byui.thf10;
 
+import android.util.Log;
+
+import static android.content.ContentValues.TAG;
+
 public class Account extends JsonConvertible {
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
-    private String hashCode;
     private String hash;
     private String salt;
 
-    Account(String startPassword) {
-        password = startPassword;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -39,6 +39,11 @@ public class Account extends JsonConvertible {
 
     public void setPassword(String newPassword) {
         password = newPassword;
+        try {
+            encrypt();
+        } catch (Exception e) {
+            Log.i("Login","Incorrect password setting");
+        }
     }
 
     public String getPassword(){return password;}
@@ -55,23 +60,20 @@ public class Account extends JsonConvertible {
         return hash;
     }
 
-    public void encrypt()throws Exception {
+    private void encrypt()throws Exception {
         Encryption.hashUserPassword(this);
     }
     public void setHash(String hash){this.hash = hash; }
 
-    public boolean checkPassword (String password)throws Exception{
+    public boolean checkPassword (String password){
         setPassword(password);
-        if (Encryption.verifyPassword(this)){
-            return true;}
-        else{return false;}
-    }
-
-    public String getHashCode() {
-        return hashCode;
-    }
-
-    public void setHashCode(String hashCode) {
-        this.hashCode = hashCode;
+        try {
+            if (Encryption.verifyPassword(this)){
+                return true;}
+            else{return false;}
+        } catch (Exception e) {
+            Log.e(TAG,"problem check password");
+            return false;
+        }
     }
 }
