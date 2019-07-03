@@ -8,14 +8,14 @@ public class Product extends JsonConvertible {
     private String Pattern;
     private String color1;
     private String color2;
-    private int quanitity;
+    private int quantity;
 
     public int getProduct_id() {
         return product_id;
     }
 
-    public int getQuanitity() {
-        return quanitity;
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getColor1() {
@@ -54,8 +54,8 @@ public class Product extends JsonConvertible {
         this.product_id = product_id;
     }
 
-    public void setQuanitity(int quanitity) {
-        this.quanitity = quanitity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setSeries(String series) {

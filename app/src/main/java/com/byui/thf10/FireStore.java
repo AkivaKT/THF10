@@ -1,17 +1,24 @@
 package com.byui.thf10;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import java.util.HashMap;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,18 +43,12 @@ public class FireStore {
     }
 
 
-    public void StoreJson(List<JsonConvertible> Product) {
+    public void storeJson(List<JsonConvertible> Account) {
 
-        CollectionReference myRef = db.collection("Product");
-        Map<String, Object> Update = new HashMap<>();
-        Update.put("Product", Product);
-        // Update.put("Sales", Sales);
-        // Update.put("Price", Price);
+        CollectionReference collectionReference = db.collection("Account");
 
-        for (JsonConvertible i : Product) {
-            i.setId(IdGenerator.generateID());
-
-            myRef.add(i)
+        for (JsonConvertible i : Account) {
+            collectionReference.add(i)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -64,5 +65,29 @@ public class FireStore {
 
     }
 
-}
+    public void pullCollection(final String collection, final CallBackList callBackList) {
+        CollectionReference collectionReference = db.collection(collection);
 
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<JsonConvertible> list = new ArrayList<>();
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                JsonConvertible obj = doc.toObject(JsonConvertible.class);
+                                list.add(obj);
+                                Log.d(TAG, "account added" + doc.toString());
+                            }
+                            callBackList.onCallback(list);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "fail to load collection for" + collection);
+                    }
+                });
+    }
+}

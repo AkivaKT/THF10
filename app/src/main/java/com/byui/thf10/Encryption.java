@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public final class Encryption {
+final class Encryption {
     // The SecureRandom() class is a special subclass of Random() in
     // order to make our "random" salt values less predictable.
     // For more information, see:
