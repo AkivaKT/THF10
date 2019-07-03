@@ -1,28 +1,18 @@
 package com.byui.thf10;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         f1.setup();
         Product pr1 = new Product();
 
-        pr1.setQuanitity(1);
+        pr1.setQuantity(1);
         pr1.setColor1("yellow");
         pr1.setColor2("green");
         pr1.setPattern("stripe");
@@ -51,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         pr1.setType("idunno");
 
         Product pr2 = new Product();
-        pr2.setQuanitity(1);
+        pr2.setQuantity(1);
         pr2.setColor1("white");
         pr2.setColor2("brown");
         pr2.setPattern("fill");
@@ -59,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         pr2.setType("idunno");
 
         Product pr3 = new Product();
-        pr3.setQuanitity(1);
+        pr3.setQuantity(1);
         pr3.setColor1("purple");
         pr3.setColor2("blue");
         pr3.setPattern("Floral");

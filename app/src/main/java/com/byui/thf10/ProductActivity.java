@@ -34,6 +34,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         color1 = (EditText) findViewById(R.id.typeColor1);
         color2 = (EditText) findViewById(R.id.typeColor2);
         quanitity = (EditText) findViewById(R.id.typeQuantity);
+        button = (Button) findViewById(R.id.button2);
 
         button.setOnClickListener(this);
     }
