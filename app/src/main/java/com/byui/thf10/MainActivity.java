@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,10 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // pull list of accounts
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
-        List<JsonConvertible> json = pullAccounts();
-        if (json.isEmpty()){
-            Log.d(TAG, "empty accounts list" );
-        }
+        pullAccounts();
 
 
         // button listener
@@ -64,40 +62,39 @@ public class MainActivity extends AppCompatActivity {
     private void validate(String userName, String userPassword) {
         // check id and password in this function.
 
+        for (Account user : accounts) {
+            if (userName.equals(user.getUserName())) {
+                if (user.checkPassword(userPassword)) {
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                } else {
+                    loginCounter--;
+                    info.setText("Remained attemps: " + String.valueOf(loginCounter));
+                    Toast.makeText(getApplicationContext(),"Wrong password",Toast.LENGTH_SHORT).show();
+                    if (loginCounter == 0) {
+                        login.setEnabled(false);
+                    }
+                }
+            } else {
+                loginCounter--;
 
-
-        if ((userName.equals("Admin")) && (userPassword.equals("1234"))) {
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-        }
-        else {
-            loginCounter--;
-
-            info.setText("Remained attemps: " + String.valueOf(loginCounter));
-
-            if (loginCounter == 0) {
-                login.setEnabled(false);
+                info.setText("Remained attemps: " + String.valueOf(loginCounter));
+                Toast.makeText(getApplicationContext(),"No such users",Toast.LENGTH_SHORT).show();
+                if (loginCounter == 0) {
+                    login.setEnabled(false);
+                }
             }
         }
     }
 
-    public void createAccount(){
-        Account a1 = new Account();
-        a1.setFirstName("Keith2");
-        a1.setLastName("Tung2");
-        a1.setUserName("akin2");
-        a1.setPassword("newPass");
 
-        List<JsonConvertible> l1 = new LinkedList<>();
-        l1.add(a1);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FireStore f = new FireStore(db);
-        f.setup();
-        f.storeJson(l1);
-
-    }
-
-    public List<JsonConvertible> pullAccounts(){
-        return firedb.pullCollection("Account");
+    public void pullAccounts(){
+        firedb.pullCollection("Account", new CallBackList() {
+            @Override
+            public void onCallback(List<JsonConvertible> jsonList) {
+                accounts = (List<Account>)(List<?>)jsonList;
+                Toast.makeText(getApplicationContext(), "You may login now", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

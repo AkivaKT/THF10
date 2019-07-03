@@ -29,7 +29,6 @@ public class FireStore {
     private String Product;
     private String Sales;
     private String Price;
-    List<JsonConvertible> list = new ArrayList<>();
 
     public FireStore(FirebaseFirestore db) {
         this.db = db;
@@ -66,7 +65,7 @@ public class FireStore {
 
     }
 
-    public List<JsonConvertible> pullCollection(final String collection) {
+    public void pullCollection(final String collection, final CallBackList callBackList) {
         CollectionReference collectionReference = db.collection(collection);
 
         collectionReference.get()
@@ -74,18 +73,13 @@ public class FireStore {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                assign(document);
-                                Log.d(TAG, "dfjjj" + document.toString());
-                                Log.d(TAG, "onSuccess: account added");
+                            List<JsonConvertible> list = new ArrayList<>();
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                JsonConvertible obj = doc.toObject(JsonConvertible.class);
+                                list.add(obj);
+                                Log.d(TAG, "account added" + doc.toString());
                             }
-                            Log.d(TAG, "onSuccess: data pulled");
-                            for (JsonConvertible document : list){
-                                Log.d(TAG, "dfjjj account added in list layer 1" + document.toString());
-                            }
-                        }
-                        for (JsonConvertible document : list){
-                            Log.d(TAG, "dfjjj account added in list layer 2" + document.toString());
+                            callBackList.onCallback(list);
                         }
                     }
                 })
@@ -95,14 +89,5 @@ public class FireStore {
                         Log.e(TAG, "fail to load collection for" + collection);
                     }
                 });
-        for (JsonConvertible document : list){
-            Log.d(TAG, "dfjjj  is on list" + document.toString());
-        }
-        return list;
-    }
-
-    public void assign(QueryDocumentSnapshot doc){
-        JsonConvertible obj = doc.toObject(Account.class);
-        list.add(obj);
     }
 }
