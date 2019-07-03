@@ -32,6 +32,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         //Product spinner
         Spinner ProductSpinner = findViewById(R.id.Product);
+        ProductSpinner.setOnItemSelectedListener(this);
 
         List<String> ProductType = new ArrayList<String>();
         ProductType.add("Floral");
@@ -49,6 +50,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // Price Spinner
         Spinner PriceSpinner = findViewById(R.id.Price);
+        PriceSpinner.setOnItemSelectedListener(this);
 
         List<Float> PriceType = new ArrayList<Float>();
         PriceType.add((float) 13.50);
@@ -75,14 +77,11 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         SaleEntry.add(Quantity);
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
         String text= parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(),text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
+        
 }
