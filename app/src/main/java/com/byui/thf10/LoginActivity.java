@@ -148,8 +148,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openActivity3(){
-        //Intent intent1 = new Intent(this, woo_test.class);
-        //startActivity(intent1);
+        Intent productIntent = new Intent(this, ProductActivity.class);
+        startActivity(productIntent);
     }
 
     public void openActivity4(){
