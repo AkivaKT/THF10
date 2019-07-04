@@ -39,11 +39,6 @@ public class Account extends JsonConvertible {
 
     public void setPassword(String newPassword) {
         password = newPassword;
-        try {
-            encrypt();
-        } catch (Exception e) {
-            Log.i("Login","Incorrect password setting");
-        }
     }
 
     public String getPassword(){return password;}
@@ -60,9 +55,10 @@ public class Account extends JsonConvertible {
         return hash;
     }
 
-    private void encrypt()throws Exception {
+    public void encrypt()throws Exception {
         Encryption.hashUserPassword(this);
     }
+
     public void setHash(String hash){this.hash = hash; }
 
     public boolean checkPassword (String password){
