@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         firedb.pullCollection("Account", new CallBackList() {
             @Override
             public void onCallback(List<JsonConvertible> jsonList) {
-                accounts = (List<Account>)(List<?>)jsonList;
+                accounts = (List<Account>)(Object)jsonList;
                 Toast.makeText(getApplicationContext(), "You may login now", Toast.LENGTH_SHORT).show();
             }
         });
