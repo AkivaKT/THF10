@@ -43,11 +43,11 @@ public class FireStore {
     }
 
 
-    public void storeJson(List<JsonConvertible> Account) {
+    public void storeJson(List<JsonConvertible> list, String collection) {
 
-        CollectionReference collectionReference = db.collection("Account");
+        CollectionReference collectionReference = db.collection(collection);
 
-        for (JsonConvertible i : Account) {
+        for (JsonConvertible i : list) {
             collectionReference.add(i)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -65,19 +65,24 @@ public class FireStore {
 
     }
 
-    public void pullCollection(final String collection, final CallBackList callBackList) {
+    public void pullCollection(final String collection, final String c, final CallBackList callBackList) {
         CollectionReference collectionReference = db.collection(collection);
+
 
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<JsonConvertible> list = new ArrayList<>();
+                            List<Object> list = new ArrayList<>();
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                JsonConvertible obj = doc.toObject(JsonConvertible.class);
-                                list.add(obj);
-                                Log.d(TAG, "account added" + doc.toString());
+                                try {
+                                    Object obj = doc.toObject(Class.forName(c));
+                                    list.add(obj);
+                                    Log.d(TAG, "account added" + doc.toString());
+                                } catch (ClassNotFoundException e) {
+                                    Log.d(TAG, "No such class");
+                                }
                             }
                             callBackList.onCallback(list);
                         }

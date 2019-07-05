@@ -1,12 +1,17 @@
 package com.byui.thf10;
 
+import android.util.Log;
+
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+
+import static android.content.ContentValues.TAG;
 
 final class Encryption {
     // The SecureRandom() class is a special subclass of Random() in
@@ -38,13 +43,18 @@ final class Encryption {
     // This function uses the PBKDF2 algorithm for generating the hash. If you're
     // interested in why this particular function was chosen, see:
     // http://security.stackexchange.com/questions/4781/do-any-security-experts-recommend-bcrypt-for-password-storage/6415#6415
-    private static byte[] getHash(char[] password, byte[] salt) throws Exception {
+    private static byte[] getHash(char[] password, byte[] salt) throws NoSuchAlgorithmException {
 
         PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
         Arrays.fill(password, Character.MIN_VALUE);
 
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = skf.generateSecret(spec).getEncoded();
+        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBEwithHmacSHA512AndAES_256");
+        byte[] hash = new byte[0];
+        try {
+            hash = skf.generateSecret(spec).getEncoded();
+        } catch (InvalidKeySpecException e) {
+            Log.e(TAG,"problem with key");
+        }
 
         return hash;
     }
@@ -66,7 +76,7 @@ final class Encryption {
         // from memory for security purposes
         byte[] hash = getHash(password, salt);
         Arrays.fill(password, Character.MIN_VALUE);
-        user.setPassword("");
+        //user.setPassword("");
 
         if(hash != null) {
 

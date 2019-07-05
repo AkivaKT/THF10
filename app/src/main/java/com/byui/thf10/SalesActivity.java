@@ -31,8 +31,8 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_sales);
 
         //Product spinner
-        Spinner ProductSpinner = findViewById(R.id.Product);
-        ProductSpinner.setOnItemSelectedListener(this);
+        //Spinner ProductSpinner = findViewById(R.id.Product);
+        //ProductSpinner.setOnItemSelectedListener(this);
 
         List<String> ProductType = new ArrayList<String>();
         ProductType.add("Floral");
@@ -45,12 +45,12 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, ProductType);
         ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ProductSpinner.setAdapter(ProductAdapter);
-        ProductSpinner.setOnItemSelectedListener(this);
+        //ProductSpinner.setAdapter(ProductAdapter);
+        //ProductSpinner.setOnItemSelectedListener(this);
 
         // Price Spinner
-        Spinner PriceSpinner = findViewById(R.id.Price);
-        PriceSpinner.setOnItemSelectedListener(this);
+        //Spinner PriceSpinner = findViewById(R.id.Price);
+        //PriceSpinner.setOnItemSelectedListener(this);
 
         List<Float> PriceType = new ArrayList<Float>();
         PriceType.add((float) 13.50);
@@ -63,25 +63,32 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         ArrayAdapter<Float> PriceAdapter = new ArrayAdapter<Float>(this,
                 android.R.layout.simple_spinner_item, PriceType);
         ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        PriceSpinner.setAdapter(PriceAdapter);
-        PriceSpinner.setOnItemSelectedListener(this);
+        //PriceSpinner.setAdapter(PriceAdapter);
+        //PriceSpinner.setOnItemSelectedListener(this);
 
         // Quantity Value
-        Quantity = (EditText)findViewById(R.id.Quantity);
+        //Quantity = (EditText) findViewById(R.id.Quantity);
 
         // Json Convertible
-        Type listType = new TypeToken<List<JsonConvertible>>() {}.getType();
+        Type listType = new TypeToken<List<JsonConvertible>>() {
+        }.getType();
         List<JsonConvertible> SaleEntry = new LinkedList<>();
-        SaleEntry.add(ProductSpinner);
-        SaleEntry.add(PriceSpinner);
-        SaleEntry.add(Quantity);
+        //SaleEntry.add(ProductSpinner);
+        //SaleEntry.add(PriceSpinner);
+        //SaleEntry.add(Quantity);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-        String text= parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(),text, Toast.LENGTH_SHORT).show();
-        
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
