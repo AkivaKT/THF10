@@ -27,7 +27,7 @@ public class ProductActivity extends AppCompatActivity {
     private TextView output_TextView;
     Button button;
 
-    private ArrayList<JsonConvertible> productList = new ArrayList<JsonConvertible>();
+    private ArrayList<JsonConvertible> productList = new ArrayList<>();
 
     String testText;
 
@@ -78,7 +78,7 @@ public class ProductActivity extends AppCompatActivity {
 
         Product product = new Product();
 
-        if (getType == null || getType.trim().equals("") || getSeries == null || getSeries.trim().equals("") || getPattern == null || getPattern.trim().equals("") || getColor1 == null || getColor1.trim().equals("") || getColor2 == null || getColor2.trim().equals("") || getQuantity == null || getQuantity.trim().equals(""))  {
+        if (getType == null || getType.trim().equals("") || getSeries == null || getSeries.trim().equals("") || getPattern == null || getPattern.trim().equals("") || getColor1 == null || getColor1.trim().equals("") || getColor2 == null || getColor2.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
@@ -90,9 +90,10 @@ public class ProductActivity extends AppCompatActivity {
             // something add quantity
             // product.setQuantity(quantity);
 
+
             // do not work!!!!!!!
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-            button.setAdapter(adapter);
+            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+            //button.setAdapter(adapter);
 
             productList.add(product);
         }
