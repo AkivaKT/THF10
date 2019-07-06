@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button product;
     private Button price;
     private Button sale;
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

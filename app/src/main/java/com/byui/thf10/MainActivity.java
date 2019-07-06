@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         // title
         setTitle("HandsomeTieFactory");
-
-
         // pull list of accounts
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
