@@ -84,18 +84,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
 */
-        button = (Button) findViewById(R.id.button);
+        //button = (Button) findViewById(R.id.button);
         product = (Button) findViewById(R.id.product);
         price = (Button) findViewById(R.id.price);
         sale = (Button) findViewById(R.id.sale);
 
-        button.setOnClickListener(new View.OnClickListener() {
+       /* button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity2();
 
             }
-        });
+        });*/
 
         product.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +122,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void openActivity2(){
+    /*public void openActivity2(){
         //Intent intent = new Intent(this, woo_test.class);
         //startActivity(intent);
-    }
+    }*/
 
     public void openActivity3(){
         Intent productIntent = new Intent(this, ProductActivity.class);
