@@ -2,21 +2,16 @@ package com.byui.thf10;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import static android.content.ContentValues.TAG;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -37,7 +32,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        type = findViewById(R.id.typeType);
+        type = findViewById(R.id.NewPrice);
         series = findViewById(R.id.typeSeries);
         pattern = findViewById(R.id.typePattern);
         color1 = findViewById(R.id.typeColor1);

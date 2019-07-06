@@ -8,6 +8,7 @@ public class Price extends JsonConvertible{
     private Date end_date;
     private int amount;
     private boolean active;
+    private String NewPrice;
 
     // getters
 
@@ -19,7 +20,17 @@ public class Price extends JsonConvertible{
 
     public boolean getActive(){return this.active;}
 
-    public int getAmount(){return amount;}
+    public int getPrice(){return amount;}
+
+    public String getNewPrice() {
+        return NewPrice;
+    }
+
+    public void setNewPrice(String NewPrice) {
+        this.NewPrice = NewPrice;
+    }
+
+
 
     // setters
 
