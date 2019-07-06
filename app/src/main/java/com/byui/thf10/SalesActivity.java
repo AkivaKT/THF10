@@ -85,7 +85,6 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         String item = parent.getItemAtPosition(position).toString();
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

@@ -3,8 +3,10 @@ package com.byui.thf10;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +16,11 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class PriceActivity extends AppCompatActivity {
+public class PriceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText NewPrice;
-
     private TextView output_TextView;
     Button button;
-
     private ArrayList<JsonConvertible> priceList = new ArrayList<>();
 
 
@@ -29,12 +29,12 @@ public class PriceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_price);
 
+        Spinner monthSpinner = findViewById(R.id.month);
+        monthSpinner.setOnItemSelectedListener(this);
+
+
         NewPrice = findViewById(R.id.NewPrice);
-        // quantity variable
-        // quantitySpinner = (Spinner) findViewById(R.id.Quantity);
         button = findViewById(R.id.clickButton);
-
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +55,23 @@ public class PriceActivity extends AppCompatActivity {
         }
         else {
             price.setNewPrice(getNewPrice);
-            // something add quantity
-            // product.setQuantity(quantity);
-
             // do not work!!!!!!!
             //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
             //button.setAdapter(adapter);
             priceList.add(price);
             Log.i(TAG, "sdd Product created.");
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

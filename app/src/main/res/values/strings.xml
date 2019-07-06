@@ -1,15 +1,28 @@
 <resources>
     <string name="app_name">THF</string>
+
+    // login used
     <string name="pricec">Create New Price</string>
     <string name="salec">Record New Sale</string>
     <string name="productc">Create NEw Product</string>
 
+    // delete
     <string name="priced">Delete Price</string>
     <string name="saled">Delete Sale</string>
     <string name="productd">Delete Product</string>
 
     <string name="pushc">Push changes</string>
     <string name="newrecord">New Record</string>
+
+    // Price Page
+    <string name="pricee">Enter Price Tag</string>
+    <string name="prices">Enter Start Date</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="pricea">Active</string>
+
+
 
     <string-array name="numbers">
         <item>One</item>
@@ -26,6 +39,21 @@
         <item>$40</item>
         <item>$50</item>
     </string-array>
+
+    <string-array name="Month">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+    </string-array>
+
+
+
+
+
+
+
     <string name="title_activity_main2">Price_activity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
