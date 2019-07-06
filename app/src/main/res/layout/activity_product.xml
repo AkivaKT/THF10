@@ -10,11 +10,11 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="126dp"
+        android:layout_marginStart="160dp"
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="686dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="682dp" />
 
     <EditText
         android:id="@+id/typeType"
@@ -86,19 +86,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeColor1" />
 
-    <EditText
-        android:id="@+id/typeQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Quantity"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/Quantity"
+        android:layout_width="264dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typeColor2" />
+        app:layout_constraintTop_toBottomOf="@+id/typeColor2"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/TestText"
@@ -108,5 +107,16 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="401dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="11dp"
+        android:layout_marginEnd="8dp"
+        android:text="Quantity"
+        app:layout_constraintEnd_toStartOf="@+id/Quantity"
+        app:layout_constraintHorizontal_bias="0.891"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="360dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
