@@ -1,21 +1,19 @@
 package com.byui.thf10;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.byui.thf10.ui.main.SectionsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.byui.thf10.ui.main.SectionsPagerAdapter;
-
 public class Main2Activity extends AppCompatActivity {
+
+    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +34,8 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 }

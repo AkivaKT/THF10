@@ -29,4 +29,10 @@
     <string name="title_activity_main2">Price_activity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_tab_activity">tab_activity</string>
+    <string name="title_activity_main__tab_woo">Main_Activity_tab_woo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="section_format" />
 </resources>
