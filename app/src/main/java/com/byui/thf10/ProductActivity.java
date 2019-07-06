@@ -44,7 +44,7 @@ public class ProductActivity extends AppCompatActivity {
         color2 = findViewById(R.id.typeColor2);
         // quantity variable
         // quantitySpinner = (Spinner) findViewById(R.id.Quantity);
-        button = findViewById(R.id.button2);
+        button = findViewById(R.id.clickButton);
 
 
 
