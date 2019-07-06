@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import static android.content.ContentValues.TAG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +31,20 @@ public class ProductActivity extends AppCompatActivity {
 
     private ArrayList<JsonConvertible> productList = new ArrayList<>();
 
-    String testText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        type = (EditText) findViewById(R.id.typeId);
-        series = (EditText) findViewById(R.id.typeSeries);
-        pattern = (EditText) findViewById(R.id.typePattern);
-        color1 = (EditText) findViewById(R.id.typeColor1);
-        color2 = (EditText) findViewById(R.id.typeColor2);
+        type = findViewById(R.id.typeType);
+        series = findViewById(R.id.typeSeries);
+        pattern = findViewById(R.id.typePattern);
+        color1 = findViewById(R.id.typeColor1);
+        color2 = findViewById(R.id.typeColor2);
         // quantity variable
         // quantitySpinner = (Spinner) findViewById(R.id.Quantity);
-        button = (Button) findViewById(R.id.button2);
+        button = findViewById(R.id.clickButton);
 
 
 
@@ -53,20 +54,11 @@ public class ProductActivity extends AppCompatActivity {
                 saveInfo();
             }
         });
-
-
-
         //List<String> Listseries = new ArrayList<String>();
        // List<String> Listpattern = new ArrayList<String>();
         //List<String> Listcolor1 = new ArrayList<String>();
        // List<String> Listcolor2 = new ArrayList<String>();
        // List<String> Listquanitity = new ArrayList<String>();
-
-
-
-
-
-
     }
 
     public void saveInfo() {
@@ -90,12 +82,11 @@ public class ProductActivity extends AppCompatActivity {
             // something add quantity
             // product.setQuantity(quantity);
 
-
             // do not work!!!!!!!
             //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
             //button.setAdapter(adapter);
-
             productList.add(product);
+            Log.i(TAG, "sdd Product created.");
         }
     }
 }
