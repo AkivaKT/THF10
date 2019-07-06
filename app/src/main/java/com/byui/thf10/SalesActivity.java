@@ -30,9 +30,9 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales);
 
-        //Product spinner
-        //Spinner ProductSpinner = findViewById(R.id.Product);
-        //ProductSpinner.setOnItemSelectedListener(this);
+        Product spinner;
+        Spinner ProductSpinner = findViewById(R.id.Product);
+        ProductSpinner.setOnItemSelectedListener(this);
 
         List<String> ProductType = new ArrayList<String>();
         ProductType.add("Floral");
@@ -44,13 +44,14 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, ProductType);
-        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //ProductSpinner.setAdapter(ProductAdapter);
-        //ProductSpinner.setOnItemSelectedListener(this);
 
-        // Price Spinner
-        //Spinner PriceSpinner = findViewById(R.id.Price);
-        //PriceSpinner.setOnItemSelectedListener(this);
+        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ProductSpinner.setAdapter(ProductAdapter);
+        ProductSpinner.setOnItemSelectedListener(this);
+
+        Price Spinner;
+        Spinner PriceSpinner = findViewById(R.id.Price);
+        PriceSpinner.setOnItemSelectedListener(this);
 
         List<Float> PriceType = new ArrayList<Float>();
         PriceType.add((float) 13.50);
@@ -62,9 +63,9 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         ArrayAdapter<Float> PriceAdapter = new ArrayAdapter<Float>(this,
                 android.R.layout.simple_spinner_item, PriceType);
-        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //PriceSpinner.setAdapter(PriceAdapter);
-        //PriceSpinner.setOnItemSelectedListener(this);
+        PriceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        PriceSpinner.setAdapter(PriceAdapter);
+        PriceSpinner.setOnItemSelectedListener(this);
 
         // Quantity Value
         //Quantity = (EditText) findViewById(R.id.Quantity);
@@ -84,7 +85,6 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         String item = parent.getItemAtPosition(position).toString();
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

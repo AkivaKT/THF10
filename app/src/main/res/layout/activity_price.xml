@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PriceActivity">
+
+    <Button
+        android:id="@+id/clickButton"
+        android:layout_width="176dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="232dp"
+        android:text="Save Price" />
+
+    <EditText
+        android:id="@+id/NewPrice"
+        android:layout_width="33dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Enter Price Tag"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+
+    <Spinner
+        android:id="@+id/day"
+        android:layout_width="33dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/day"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+
+
+    <Spinner
+        android:id="@+id/month"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="213dp"
+        android:layout_marginTop="207dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:entries="@array/Month"
+        android:hint="@string/year"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+
+    <Spinner
+        android:id="@+id/year"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="214dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/month"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+
+    <TextView
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewPrice"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="-82dp"
+        android:layout_toStartOf="@+id/clickButton"
+        android:text="@string/month" />
+
+
+    <TextView
+        android:layout_width="43dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewPrice"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="-73dp"
+        android:layout_toStartOf="@+id/clickButton"
+        android:text="@string/day" />
+
+    <TextView
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewPrice"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="-67dp"
+        android:layout_toStartOf="@+id/clickButton"
+        android:text="@string/year" />
+
+</RelativeLayout>
