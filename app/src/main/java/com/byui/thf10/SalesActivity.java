@@ -63,7 +63,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         ArrayAdapter<Float> PriceAdapter = new ArrayAdapter<Float>(this,
                 android.R.layout.simple_spinner_item, PriceType);
-        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        PriceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         PriceSpinner.setAdapter(PriceAdapter);
         PriceSpinner.setOnItemSelectedListener(this);
 
