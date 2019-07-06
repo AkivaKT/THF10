@@ -44,6 +44,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
         ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, ProductType);
+
         ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ProductSpinner.setAdapter(ProductAdapter);
         ProductSpinner.setOnItemSelectedListener(this);
