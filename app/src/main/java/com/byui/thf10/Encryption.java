@@ -76,7 +76,7 @@ final class Encryption {
         // from memory for security purposes
         byte[] hash = getHash(password, salt);
         Arrays.fill(password, Character.MIN_VALUE);
-        //user.setPassword("");
+        user.setPassword("");
 
         if(hash != null) {
 
