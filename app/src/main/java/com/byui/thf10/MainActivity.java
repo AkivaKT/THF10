@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "sdd User matches with" + userName);
                 if (user.checkPassword(userPassword)) {
                     Log.d(TAG, "sdd User and password  matches with" + userName + userPassword);
+                    //woo change here LoginActivity to LoginActivity2
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     break;
