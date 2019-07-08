@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import static android.content.ContentValues.TAG;
 
 import java.util.ArrayList;
@@ -23,12 +26,13 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private EditText pattern;
     private EditText color1;
     private EditText color2;
-
-    // need to put spinner here
+    private FireStore firedb;
 
 
     private TextView output_TextView;
-    Button button;
+    private Button SaveButton;
+    private Button sendButton;
+
 
     private ArrayList<JsonConvertible> productList = new ArrayList<>();
 
@@ -38,14 +42,18 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
+        // CONNECTION WITH DATABASE
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        firedb = new FireStore(db);
+
         type = findViewById(R.id.NewPrice);
         series = findViewById(R.id.typeSeries);
         pattern = findViewById(R.id.typePattern);
         color1 = findViewById(R.id.typeColor1);
         color2 = findViewById(R.id.typeColor2);
-        // quantity variable
-        // quantitySpinner = (Spinner) findViewById(R.id.Quantity);
-        button = findViewById(R.id.clickButton);
+        SaveButton = findViewById(R.id.SaveButton);
+        sendButton = findViewById(R.id.SendButton);
+
 
         Spinner spinner = findViewById(R.id.Quantity);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.quantity, android.R.layout.simple_spinner_item);
@@ -55,17 +63,20 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveInfo();
             }
         });
-        //List<String> Listseries = new ArrayList<String>();
-       // List<String> Listpattern = new ArrayList<String>();
-        //List<String> Listcolor1 = new ArrayList<String>();
-       // List<String> Listcolor2 = new ArrayList<String>();
-       // List<String> Listquanitity = new ArrayList<String>();
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              sendInfo();
+                                          }
+                                      }
+        );
     }
 
     public void saveInfo() {
@@ -86,15 +97,14 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
             product.setPattern(getPattern);
             product.setColor1(getColor1);
             product.setColor2(getColor2);
-            // something add quantity
-            // product.setQuantity(quantity);
-
-            // do not work!!!!!!!
-            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-            //button.setAdapter(adapter);
             productList.add(product);
             Log.i(TAG, "sdd Product created.");
         }
+    }
+
+    public void sendInfo(){
+        firedb.storeJson(productList, "Products");
+        productList.clear();
     }
 
     @Override

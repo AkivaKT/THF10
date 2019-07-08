@@ -7,15 +7,15 @@
     tools:context=".ProductActivity">
 
     <Button
-        android:id="@+id/clickButton"
+        android:id="@+id/SaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:text="Save Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Quantity"
         tools:ignore="MissingConstraints" />
@@ -100,7 +100,7 @@
         android:layout_marginBottom="79dp"
         app:layout_constraintBottom_toTopOf="@+id/Price"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.602"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeColor2" />
 
@@ -113,11 +113,24 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:text="Quantity"
-        app:layout_constraintBottom_toTopOf="@+id/clickButton"
+        app:layout_constraintBottom_toTopOf="@+id/SaveButton"
         app:layout_constraintEnd_toStartOf="@+id/Quantity"
-        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintHorizontal_bias="0.798"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeColor2"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/SendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:text="Send Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SaveButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
