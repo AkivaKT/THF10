@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,7 +76,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         NewPrice = findViewById(R.id.NewPrice);
 
         // Buttons
-        saveButton = findViewById(R.id.clickButton);
+        saveButton = findViewById(R.id.SaveButton);
         sendButton = findViewById(R.id.sendButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {

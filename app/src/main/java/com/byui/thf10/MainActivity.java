@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
         pullAccounts();
-        //createAccount();
 
         // button listener
         login.setOnClickListener(new View.OnClickListener() {
