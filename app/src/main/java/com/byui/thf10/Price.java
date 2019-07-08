@@ -12,8 +12,6 @@ public class Price extends JsonConvertible{
 
     // getters
 
-    public int getPrice_id(){return id;}
-
     public Date getEnd_date(){ return end_date; }
 
     public Date getStart_date(){return start_date;}
@@ -26,13 +24,14 @@ public class Price extends JsonConvertible{
         return NewPrice;
     }
 
-    public void setNewPrice(String NewPrice) {
-        this.NewPrice = NewPrice;
-    }
 
 
 
     // setters
+
+    public void setNewPrice(String NewPrice) {
+        this.NewPrice = NewPrice;
+    }
 
     public void setAmount(int amount) {
         this.amount = amount;

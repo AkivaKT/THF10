@@ -1,15 +1,13 @@
 package com.byui.thf10;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -22,8 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button product;
     private Button price;
     private Button sale;
-    private Button button;
-    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,25 +119,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-        //woo
-        this.savedInstanceState = savedInstanceState;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //woo
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        setupViewPager(mViewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
     }
 
     /*public void openActivity2(){
@@ -163,27 +140,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent3 = new Intent(this, SalesActivity.class);
         startActivity(intent3);
-    }
-
-    /**
-     * @param savedInstanceState
-     */
-
-
-
-    private static final String TAG = "MainActivity";
-
-    private SectionsPageAdapter mSectionsPageAdapter;
-
-    private ViewPager mViewPager;
-
-
-    private void setupViewPager(ViewPager viewPager) {
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1Fragment(), "TAB1");
-        adapter.addFragment(new Tab2Fragment(), "TAB2");
-        adapter.addFragment(new Tab3Fragment(), "TAB3");
-        viewPager.setAdapter(adapter);
     }
 
 }

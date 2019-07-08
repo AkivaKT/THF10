@@ -5,21 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import static android.content.ContentValues.TAG;
 
 import java.util.ArrayList;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText type;
     private EditText series;
     private EditText pattern;
     private EditText color1;
     private EditText color2;
+
+    // need to put spinner here
+
 
     private TextView output_TextView;
     Button button;
@@ -40,6 +46,12 @@ public class ProductActivity extends AppCompatActivity {
         // quantity variable
         // quantitySpinner = (Spinner) findViewById(R.id.Quantity);
         button = findViewById(R.id.clickButton);
+
+        Spinner spinner = findViewById(R.id.Quantity);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.quantity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
 
 
@@ -83,5 +95,16 @@ public class ProductActivity extends AppCompatActivity {
             productList.add(product);
             Log.i(TAG, "sdd Product created.");
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
