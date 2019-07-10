@@ -1,26 +1,43 @@
 package com.byui.thf10;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.fragment.app.FragmentPagerAdapter;
 
-class SectionsPageAdapter extends PagerAdapter {
-    public SectionsPageAdapter(FragmentManager supportFragmentManager) {
+class SectionsPageAdapter extends FragmentPagerAdapter {
 
+
+    public SectionsPageAdapter(@NonNull FragmentManager fm) {
+        super(fm);
     }
 
-    public void addFragment(Tab2Fragment tab1Fragment, String tab1) {
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        Fragment fragment;
+
+
+        switch(position) {
+            case 0:
+                fragment = new Tab1Fragment();
+                break;
+            case 1:
+                fragment = new Tab2Fragment();
+                break;
+            case 2:
+                fragment = new Tab3Fragment();
+                break;
+
+            default:
+                fragment = null;
+        }
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
+        //because there's 3 fragment
+        return 3;
     }
 }
