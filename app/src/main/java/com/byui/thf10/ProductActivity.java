@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -28,10 +29,12 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private EditText color2;
     private FireStore firedb;
 
-
-    private TextView output_TextView;
-    private Button SaveButton;
+    private Button saveButton;
     private Button sendButton;
+    private Button deleteButton;
+
+    private Spinner spinner;
+
 
 
     private ArrayList<JsonConvertible> productList = new ArrayList<>();
@@ -46,16 +49,21 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
 
+
+
         type = findViewById(R.id.NewPrice);
         series = findViewById(R.id.typeSeries);
         pattern = findViewById(R.id.typePattern);
         color1 = findViewById(R.id.typeColor1);
         color2 = findViewById(R.id.typeColor2);
-        SaveButton = findViewById(R.id.SaveButton);
+        saveButton = findViewById(R.id.SaveButton);
         sendButton = findViewById(R.id.SendButton);
+        deleteButton = findViewById(R.id.deleteButton);
+
+        spinner = findViewById(R.id.Quantity);
 
 
-        Spinner spinner = findViewById(R.id.Quantity);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.quantity, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -63,7 +71,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-        SaveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveInfo();
@@ -74,6 +82,15 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                                           @Override
                                           public void onClick(View v) {
                                               sendInfo();
+                                          }
+                                      }
+        );
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              String selectedItem = spinner.getSelectedItem().toString();
+                                              deleteObject(selectedItem);
                                           }
                                       }
         );
@@ -105,6 +122,11 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     public void sendInfo(){
         firedb.storeJson(productList, "Products");
         productList.clear();
+    }
+
+    public void deleteObject(String selectedItem) {
+        productList.remove(selectedItem);
+        /// (BaseAdapter)productList).notifyDataSetChanged();
     }
 
     @Override
