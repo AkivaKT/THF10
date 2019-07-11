@@ -23,17 +23,22 @@ import static android.content.ContentValues.TAG;
 
 public class PriceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText NewPrice;
+    private EditText newPrice;
+    private EditText description;
     private Button saveButton;
     private Button sendButton;
     private ArrayList<JsonConvertible> priceList = new ArrayList<>();
-    private Spinner monthSpinner;
-    private Spinner yearSpinner;
-    private Spinner daySpinner;
+    private Spinner smonthSpinner;
+    private Spinner syearSpinner;
+    private Spinner sdaySpinner;
+    private Spinner emonthSpinner;
+    private Spinner eyearSpinner;
+    private Spinner edaySpinner;
     private ArrayAdapter<Integer> lAdapter;
     private ArrayAdapter<Integer> sAdapter;
     private ArrayAdapter<Integer> stAdapter;
-    boolean longMonth = true;
+    boolean slongMonth = true;
+    boolean elongMonth = true;
     private FireStore firedb;
 
     @Override
@@ -46,22 +51,31 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         firedb = new FireStore(db);
 
         // create spinner
-        monthSpinner = findViewById(R.id.month);
-        monthSpinner.setOnItemSelectedListener(this);
-        daySpinner = findViewById(R.id.day);
-        daySpinner.setOnItemSelectedListener(this);
-        yearSpinner = findViewById(R.id.year);
-        yearSpinner.setOnItemSelectedListener(this);
+        smonthSpinner = findViewById(R.id.sMonth);
+        smonthSpinner.setOnItemSelectedListener(this);
+        sdaySpinner = findViewById(R.id.sDay);
+        sdaySpinner.setOnItemSelectedListener(this);
+        syearSpinner = findViewById(R.id.sYear);
+        syearSpinner.setOnItemSelectedListener(this);
+
+        emonthSpinner = findViewById(R.id.eMonth);
+        emonthSpinner.setOnItemSelectedListener(this);
+        edaySpinner = findViewById(R.id.eDay);
+        edaySpinner.setOnItemSelectedListener(this);
+        eyearSpinner = findViewById(R.id.eYear);
+        eyearSpinner.setOnItemSelectedListener(this);
 
         // Adapters for months
         Integer[] shortMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
         List<Integer> sMonthList = new ArrayList<>(Arrays.asList(shortMonth));
         stAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item , sMonthList);
+
         Integer[] shorterMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
         List<Integer> stMonthList = new ArrayList<>(Arrays.asList(shorterMonth));
         sAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item , stMonthList);
+
         Integer[] longMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         List<Integer> lMonthList = new ArrayList<>(Arrays.asList(longMonth));
         lAdapter = new ArrayAdapter<>(
@@ -70,10 +84,12 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         stAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daySpinner.setAdapter(lAdapter);
+        sdaySpinner.setAdapter(lAdapter);
+        edaySpinner.setAdapter(lAdapter);
 
-        // Edittext
-        NewPrice = findViewById(R.id.NewPrice);
+        // Edit text
+        newPrice = findViewById(R.id.NewPrice);
+        description = findViewById(R.id.description);
 
         // Buttons
         saveButton = findViewById(R.id.SaveButton);
@@ -97,10 +113,14 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void saveInfo() {
-        String getNewPrice = NewPrice.getText().toString();
-        String year = yearSpinner.getSelectedItem().toString();
-        int month = monthSpinner.getSelectedItemPosition();
-        String day = daySpinner.getSelectedItem().toString();
+        String getNewPrice = newPrice.getText().toString();
+        String sYear = syearSpinner.getSelectedItem().toString();
+        int sMonth = smonthSpinner.getSelectedItemPosition();
+        String sDay = sdaySpinner.getSelectedItem().toString();
+        String eYear = eyearSpinner.getSelectedItem().toString();
+        int eMonth = emonthSpinner.getSelectedItemPosition();
+        String eDay = edaySpinner.getSelectedItem().toString();
+        String descrip = description.getText().toString();
         Price price = new Price();
 
         if (getNewPrice == null || getNewPrice.trim().equals(""))  {
@@ -109,18 +129,22 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         else {
             Calendar c = Calendar.getInstance();
-            Log.i(TAG, "sdd " + Integer.parseInt(year) + month + Integer.parseInt(day) );
-            c.set(Integer.parseInt(year), month, Integer.parseInt(day));
-            price.setNewPrice(getNewPrice);
+            Log.i(TAG, "sdd " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
+            c.set(Integer.parseInt(sYear), sMonth, Integer.parseInt(sDay));
+            price.setAmount(Float.parseFloat(getNewPrice));
             price.setStart_date(c.getTime());
-            price.setEnd_date(null);
+            c.set(Integer.parseInt(eYear), eMonth, Integer.parseInt(eDay));
+            price.setEnd_date(c.getTime());
             priceList.add(price);
-            Log.i(TAG, "Price created.");
+            price.setActive(true);
+            price.setDescription(descrip);
+            Log.i(TAG, "New Price created.");
         }
     }
 
     public void sendInfo(){
         firedb.storeJson(priceList, "Prices");
+        Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
         priceList.clear();
     }
 
@@ -129,20 +153,38 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         // On selecting a spinner item
         String text = parent.getItemAtPosition(position).toString();
 
-        if (parent.getId() == R.id.month){
+        if (parent.getId() == R.id.sMonth){
             if (Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
-                    !longMonth){
-                daySpinner.setAdapter(lAdapter);
+                    !slongMonth){
+                sdaySpinner.setAdapter(lAdapter);
                 Log.i(TAG,"sdd day limit + changed");
-                longMonth = true;
+                slongMonth = true;
             } else if (position + 1 == 2){
-                daySpinner.setAdapter(stAdapter);
+                sdaySpinner.setAdapter(stAdapter);
                 Log.i(TAG,"sdd day limit - changed");
-                longMonth = false;
+                slongMonth = false;
             } else if (!Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
-                    longMonth){
-                daySpinner.setAdapter(sAdapter);
-                longMonth = false;
+                    slongMonth){
+                sdaySpinner.setAdapter(sAdapter);
+                slongMonth = false;
+            }
+        }
+
+
+        if (parent.getId() == R.id.eMonth){
+            if (Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
+                    !elongMonth){
+                edaySpinner.setAdapter(lAdapter);
+                Log.i(TAG,"sdd day limit + changed");
+                elongMonth = true;
+            } else if (position + 1 == 2){
+                edaySpinner.setAdapter(stAdapter);
+                Log.i(TAG,"sdd day limit - changed");
+                elongMonth = false;
+            } else if (!Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
+                    elongMonth){
+                edaySpinner.setAdapter(sAdapter);
+                elongMonth = false;
             }
         }
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
