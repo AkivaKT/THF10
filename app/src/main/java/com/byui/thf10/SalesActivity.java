@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -24,6 +24,8 @@ import static android.R.layout.simple_spinner_item;
 public class SalesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText Quantity;
+    private FireStore firedb;
+    private ArrayList<JsonConvertible> salesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         //SaleEntry.add(ProductSpinner);
         //SaleEntry.add(PriceSpinner);
         //SaleEntry.add(Quantity);
+
     }
 
     @Override
@@ -85,6 +88,11 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         String item = parent.getItemAtPosition(position).toString();
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendInfo(){
+        firedb.storeJson(salesList, "Sales");
+        salesList.clear();
     }
 
     @Override
