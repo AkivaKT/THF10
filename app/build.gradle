@@ -95,3 +95,14 @@ dependencies {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:+'
 }
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:+'
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'com.google.android.material:material:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
+    implementation 'androidx.lifecycle:lifecycle-extensions:+'
+}
