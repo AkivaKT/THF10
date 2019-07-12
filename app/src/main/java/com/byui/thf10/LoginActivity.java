@@ -126,18 +126,18 @@ public class LoginActivity extends AppCompatActivity {
     }*/
 
     public void openActivity3(){
-        Intent productIntent = new Intent(this, LoginActivity3.class);
+        Intent productIntent = new Intent(this, LoginActivity4.class);
         startActivity(productIntent);
     }
 
     public void openActivity4(){
-        Intent priceIntent = new Intent(this, LoginActivity2.class);
+        Intent priceIntent = new Intent(this, LoginActivity3.class);
         startActivity(priceIntent);
     }
 
     public void openActivity5(){
 
-        Intent intent3 = new Intent(this, LoginActivity4.class);
+        Intent intent3 = new Intent(this, LoginActivity2.class);
         startActivity(intent3);
     }
 
