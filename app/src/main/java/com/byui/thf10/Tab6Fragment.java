@@ -14,21 +14,21 @@ import androidx.fragment.app.Fragment;
  * Created by User on 2/28/2017.
  */
 
-public class Tab3Fragment extends Fragment {
-    private static final String TAG2 = "Tab3Fragment";
+public class Tab6Fragment extends Fragment {
+    private static final String TAG3 = "Tab6Fragment";
 
     private Button btnTEST;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container2, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab3_fragment,container2,false);
-        btnTEST = (Button) view.findViewById(R.id.btnTEST3);
+        View view = inflater.inflate(R.layout.tab6_fragment,container2,false);
+        btnTEST = (Button) view.findViewById(R.id.btnTEST6);
 
         btnTEST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "TESTING BUTTON CLICK 3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "TESTING BUTTON CLICK 6", Toast.LENGTH_SHORT).show();
             }
         });
 

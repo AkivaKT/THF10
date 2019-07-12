@@ -1,13 +1,12 @@
 package com.byui.thf10;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.firestore.FirebaseFirestore;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -127,18 +126,18 @@ public class LoginActivity extends AppCompatActivity {
     }*/
 
     public void openActivity3(){
-        Intent productIntent = new Intent(this, ProductActivity.class);
+        Intent productIntent = new Intent(this, LoginActivity3.class);
         startActivity(productIntent);
     }
 
     public void openActivity4(){
-        Intent priceIntent = new Intent(this, PriceActivity.class);
+        Intent priceIntent = new Intent(this, LoginActivity2.class);
         startActivity(priceIntent);
     }
 
     public void openActivity5(){
 
-        Intent intent3 = new Intent(this, SalesActivity.class);
+        Intent intent3 = new Intent(this, LoginActivity4.class);
         startActivity(intent3);
     }
 

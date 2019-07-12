@@ -5,31 +5,31 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-class SectionsPageAdapter extends FragmentPagerAdapter {
+class SectionsPageAdapter2 extends FragmentPagerAdapter {
 
 
-    public SectionsPageAdapter(@NonNull FragmentManager fm) {
-        super(fm);
+    public SectionsPageAdapter2(@NonNull FragmentManager fm2) {
+        super(fm2);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
+        Fragment fragment2;
 
 
         switch(position) {
             case 0:
-                fragment = new Tab1Fragment();
+                fragment2 = new Tab3Fragment();
                 break;
             case 1:
-                fragment = new Tab2Fragment();
+                fragment2 = new Tab4Fragment();
                 break;
 
             default:
-                fragment = null;
+                fragment2 = null;
         }
-        return fragment;
+        return fragment2;
     }
 
     @Override
