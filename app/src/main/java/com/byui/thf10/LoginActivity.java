@@ -1,145 +1,188 @@
 package com.byui.thf10;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.LinkedList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.time.*;
+
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SectionsPageAdapter mainPageAdapter;
+    private ViewPager mainViewPager;
 
     private Button product;
     private Button price;
     private Button sale;
+    private FireStore firedb;
+    private List<Price> prices;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Product pr1 = new Product();
-
-        pr1.setQuantity(1);
-        pr1.setColor1("yellow");
-        pr1.setColor2("green");
-        pr1.setPattern("stripe");
-        pr1.setSeries("idunno");
-        pr1.setType("idunno");
-
-        Product pr2 = new Product();
-        pr2.setQuantity(1);
-        pr2.setColor1("white");
-        pr2.setColor2("brown");
-        pr2.setPattern("fill");
-        pr2.setSeries("idunno");
-        pr2.setType("idunno");
-
-        Product pr3 = new Product();
-        pr3.setQuantity(1);
-        pr3.setColor1("purple");
-        pr3.setColor2("blue");
-        pr3.setPattern("Floral");
-        pr3.setSeries("idunno");
-        pr3.setType("idunno");
-        //woo finishes the function above
-
-
-
-        Type listType = new TypeToken<List<JsonConvertible>>() {}.getType();
-        List<JsonConvertible> target = new LinkedList<>();
-        target.add(pr1);
-        target.add(pr2);
-        target.add(pr3);
-
-
-
-        /*
-        CollectionReference myRef = database.collection("Price");
-        Map<String, Object> Update = new HashMap<>();
-
-        Update.put("Product", "10.00");
-
-        myRef.add(Update)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!" + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-
-*/
-        //button = (Button) findViewById(R.id.button);
-        product = (Button) findViewById(R.id.product);
-        price = (Button) findViewById(R.id.price);
-        sale = (Button) findViewById(R.id.sale);
-
-       /* button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity2();
-
-            }
-        });*/
+        // main button
+        product = findViewById(R.id.product);
+        price   = findViewById(R.id.price);
+        sale    = findViewById(R.id.sale);
 
         product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity3();
+                productActivity();
 
             }
         });
-
         price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity4();
+                priceActivity();
 
             }
         });
-
         sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity5();
+                saleActivity();
 
             }
         });
+
+        //database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        firedb = new FireStore(db);
+
+        pullData();
     }
 
-    /*public void openActivity2(){
-        //Intent intent = new Intent(this, woo_test.class);
-        //startActivity(intent);
-    }*/
-
-    public void openActivity3(){
+    public void productActivity(){
         Intent productIntent = new Intent(this, ProductActivity.class);
         startActivity(productIntent);
     }
 
-    public void openActivity4(){
+    public void priceActivity(){
         Intent priceIntent = new Intent(this, PriceActivity.class);
         startActivity(priceIntent);
     }
 
-    public void openActivity5(){
+    public void saleActivity(){
 
         Intent intent3 = new Intent(this, SalesActivity.class);
         startActivity(intent3);
+    }
+
+    public void pullData(){
+        prices = new ArrayList<>();
+        firedb.pullCollection("Prices", "com.byui.thf10.Price", new CallBackList() {
+            @Override
+            public void onCallback(List<Object> jsonList) {
+                for (Object i : jsonList) {
+                    prices.add((Price) i);
+                    Log.d(TAG, "data loaded.");
+                }
+                Toast.makeText(getApplicationContext(), "check the table", Toast.LENGTH_SHORT).show();
+                maketable();
+            }
+        });
+    }
+
+    private void maketable() {
+
+        TableLayout tv = (TableLayout) findViewById(R.id.table);
+        tv.removeAllViewsInLayout();
+        int flag = 1;
+        // when i=-1, loop will display heading of each column
+        // then usually data will be display from i=0 to jArray.length()
+        for (int i = -1; i < prices.size(); i++) {
+            TableRow tr = new TableRow(LoginActivity.this);
+            tr.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // this will be executed once
+            if (flag == 1) {
+                TextView b3 = new TextView(LoginActivity.this);
+                b3.setText("column heading 1");
+                b3.setTextColor(Color.BLUE);
+                b3.setTextSize(15);
+                tr.addView(b3);
+                TextView b4 = new TextView(LoginActivity.this);
+                b4.setPadding(10, 0, 0, 0);
+                b4.setTextSize(15);
+                b4.setText("column heading 2");
+                b4.setTextColor(Color.BLUE);
+                tr.addView(b4);
+                TextView b5 = new TextView(LoginActivity.this);
+                b5.setPadding(10, 0, 0, 0);
+                b5.setText("column heading 3");
+                b5.setTextColor(Color.BLUE);
+                b5.setTextSize(15);
+                tr.addView(b5);
+                tv.addView(tr);
+                final View vline = new View(LoginActivity.this);
+                vline.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
+                vline.setBackgroundColor(Color.BLUE);
+                tv.addView(vline); // add line below heading
+                flag = 0;
+            } else {
+                Price p = prices.get(i);
+
+                TextView b = new TextView(LoginActivity.this);
+                String str = String.valueOf(p.getDescription());
+                b.setText(str);
+                b.setTextColor(Color.RED);
+                b.setTextSize(15);
+                tr.addView(b);
+                TextView b1 = new TextView(LoginActivity.this);
+                b1.setPadding(10, 0, 0, 0);
+                b1.setTextSize(15);
+                Date str1 = p.getStart_date();
+                SimpleDateFormat formatter = new SimpleDateFormat(
+                        "dd/MM/yyyy");
+                try {
+                    formatter.parse(formatter.format(str1));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                b1.setText(str1.toString());
+                b1.setTextColor(Color.RED);
+                tr.addView(b1);
+                TextView b2 = new TextView(LoginActivity.this);
+                b2.setPadding(10, 0, 0, 0);
+                String str2 = p.getEnd_date().toString();
+                b2.setText(str2);
+                b2.setTextColor(Color.RED);
+                b2.setTextSize(15);
+                tr.addView(b2);
+                tv.addView(tr);
+                final View vline1 = new View(LoginActivity.this);
+                vline1.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+                vline1.setBackgroundColor(Color.WHITE);
+                tv.addView(vline1);  // add line below each row
+            }
+        }
     }
 
 }
