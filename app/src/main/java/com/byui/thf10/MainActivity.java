@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
         pullAccounts();
-        //createAccount();
 
         // button listener
         login.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "sdd User matches with" + userName);
                 if (user.checkPassword(userPassword)) {
                     Log.d(TAG, "sdd User and password  matches with" + userName + userPassword);
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    //woo change here LoginActivity to LoginActivity2
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity2.class);
                     startActivity(loginIntent);
                     break;
                 } else {

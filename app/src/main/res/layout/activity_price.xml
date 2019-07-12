@@ -7,7 +7,7 @@
     tools:context=".PriceActivity">
 
     <Button
-        android:id="@+id/clickButton"
+        android:id="@+id/SaveButton"
         android:layout_width="144dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -44,7 +44,7 @@
         android:ems="10"
         android:hint="Enter Price Tag"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+        app:layout_constraintBottom_toTopOf="@+id/SaveButton" />
 
     <Spinner
         android:id="@+id/day"
@@ -60,7 +60,7 @@
         android:ems="10"
         android:hint="@string/day"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+        app:layout_constraintBottom_toTopOf="@+id/SaveButton" />
 
 
     <Spinner
@@ -78,7 +78,7 @@
         android:entries="@array/Year"
         android:inputType="date"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+        app:layout_constraintBottom_toTopOf="@+id/SaveButton" />
 
     <Spinner
         android:id="@+id/month"
@@ -94,7 +94,7 @@
         android:ems="10"
         android:entries="@array/Month"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/clickButton" />
+        app:layout_constraintBottom_toTopOf="@+id/SaveButton" />
 
     <TextView
         android:layout_width="53dp"
@@ -104,7 +104,7 @@
         android:layout_marginStart="99dp"
         android:layout_marginTop="156dp"
         android:layout_marginEnd="-49dp"
-        android:layout_toStartOf="@+id/clickButton"
+        android:layout_toStartOf="@+id/SaveButton"
         android:text="@string/month" />
 
 
@@ -127,7 +127,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="204dp"
         android:layout_marginEnd="-69dp"
-        android:layout_toStartOf="@+id/clickButton"
+        android:layout_toStartOf="@+id/SaveButton"
         android:text="@string/year" />
 
 </RelativeLayout>
