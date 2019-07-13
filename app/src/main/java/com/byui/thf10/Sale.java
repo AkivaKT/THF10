@@ -13,50 +13,29 @@ public class Sale extends JsonConvertible {
     public String price;
     public Account account;
     public Date date;
-    public int quantity;
-    public boolean discount;
-    public float shippingCost;
-    public int created_by;
+    public String quantity;
 
     //getters
 
-    public String getPrice_id(){ return price; }
-    public Account getAccount_id(){ return account; }
-    public String getProduct_id(){ return product; }
+    public String getPrice(){ return price; }
+    public Account getAccount(){ return account; }
+    public String getProduct(){ return product; }
     public Date getDate() {
         return date;
     }
-    public int getAmount() {
+    public String getQuantity() {
         return quantity;
-    }
-    public boolean getDiscount() {
-        return discount;
-    }
-    public float getshippingCost() {
-        return shippingCost;
-    }
-    public int getCreated_by() {
-        return created_by;
     }
 
     //setters
 
     public void setPrice(String price){ this.price = price; }
     public void setProduct(String product){ this.product = product; }
-    public void setAccount_id(Account account){ this.account = account; }
-    public void setCreated_by(int created_by) {
-        this.created_by = created_by;
-    }
+    public void setAccount(Account account){ this.account = account; }
     public void setDate(Date date) {
         this.date = date;
     }
-    public void setQuantity(String amount) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
-    }
-    public void setDiscount(boolean discount) {
-        this.discount = discount;
-    }
-    public void setShippingCost(float shippingCost) {
-        this.shippingCost = shippingCost;
     }
 }
