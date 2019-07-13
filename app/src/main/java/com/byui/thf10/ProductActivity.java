@@ -1,7 +1,12 @@
 package com.byui.thf10;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +80,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
                 saveInfo();
+                if (!productList.isEmpty()) {
+                    saveButtonNotification();
+                }
             }
         });
 
@@ -108,7 +116,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         if (getType == null || getType.trim().equals("") || getSeries == null || getSeries.trim().equals("") || getPattern == null || getPattern.trim().equals("") || getColor1 == null || getColor1.trim().equals("") || getColor2 == null || getColor2.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
-        
+
         else {
             product.setType(getType);
             product.setSeries(getSeries);
@@ -120,9 +128,61 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    public void saveButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "product.saveButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Saved data to database.")
+                .setContentText("Just sent a product data.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
+    public void sendButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "product.sendButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Send data to database.")
+                .setContentText("Just sent a product data.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
     public void sendInfo(){
-        firedb.storeJson(productList, "Products");
-        productList.clear();
+        if (productList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Need to save data first then send it", Toast.LENGTH_LONG).show();
+        }
+        else {
+            firedb.storeJson(productList, "Products");
+            productList.clear();
+            sendButtonNotification();
+        }
     }
 
     public void deleteObject(String selectedItem) {
