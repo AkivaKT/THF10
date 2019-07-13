@@ -1,7 +1,6 @@
 package com.byui.thf10;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,19 +15,13 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.time.*;
 
 import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private SectionsPageAdapter mainPageAdapter;
-    private ViewPager mainViewPager;
 
     private Button product;
     private Button price;
@@ -157,13 +150,13 @@ public class LoginActivity extends AppCompatActivity {
                 TextView b1 = new TextView(LoginActivity.this);
                 b1.setPadding(10, 0, 0, 0);
                 b1.setTextSize(12);
-                Date str1 = p.getStart_date() ;
-                b1.setText(str1.toString());
+                String str1 = p.getStart_date() ;
+                b1.setText(str1);
                 b1.setTextColor(Color.RED);
                 tr.addView(b1);
                 TextView b2 = new TextView(LoginActivity.this);
                 b2.setPadding(10, 0, 0, 0);
-                String str2 = p.getEnd_date().toString();
+                String str2 = p.getEnd_date();
                 b2.setText(str2);
                 b2.setTextColor(Color.RED);
                 b2.setTextSize(12);

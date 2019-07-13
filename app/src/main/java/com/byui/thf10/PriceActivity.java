@@ -11,9 +11,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -125,13 +126,12 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             return;
         }
         else {
-            Calendar c = Calendar.getInstance();
+            LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
             Log.i(TAG, "sdd " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
-            c.set(Integer.parseInt(sYear), sMonth, Integer.parseInt(sDay));
             price.setAmount(Float.parseFloat(getNewPrice));
-            price.setStart_date(c.getTime());
-            c.set(Integer.parseInt(eYear), eMonth, Integer.parseInt(eDay));
-            price.setEnd_date(c.getTime());
+            price.setStart_date(localDate.toString());
+            localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
+            price.setEnd_date(localDate.toString());
             priceList.add(price);
             price.setActive(true);
             price.setDescription(descrip);

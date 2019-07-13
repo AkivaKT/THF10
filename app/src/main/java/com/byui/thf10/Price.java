@@ -1,20 +1,22 @@
 package com.byui.thf10;
 
 import androidx.annotation.Nullable;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Price extends JsonConvertible{
-    private Date start_date;
-    private Date end_date;
+    private String start_date;
+    private String end_date;
     private float amount;
     private boolean active;
     private String description;
 
     // getters
 
-    public Date getEnd_date(){ return end_date; }
+    public String getEnd_date(){ return end_date; }
 
-    public Date getStart_date(){return start_date;}
+    public String getStart_date(){return start_date;}
 
     public boolean getActive(){return this.active;}
 
@@ -34,9 +36,9 @@ public class Price extends JsonConvertible{
         this.amount = amount;
     }
 
-    public void setEnd_date(@Nullable Date end_date) { this.end_date = end_date;}
+    public void setEnd_date(@Nullable String end_date) { this.end_date = end_date;}
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(String start_date) {
         this.start_date = start_date;
     }
 
