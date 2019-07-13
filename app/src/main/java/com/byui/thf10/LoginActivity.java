@@ -1,8 +1,9 @@
 package com.byui.thf10;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +14,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.*;
+
 
 import static android.content.ContentValues.TAG;
 
@@ -28,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button sale;
     private FireStore firedb;
     private List<Price> prices;
+    private BroadcastReceiver tableRenew;
 
 
     @Override
@@ -67,6 +72,17 @@ public class LoginActivity extends AppCompatActivity {
         firedb = new FireStore(db);
 
         pullData();
+
+
+        tableRenew = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                pullData();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(tableRenew, new IntentFilter("Table needs renewal"));
     }
 
     public void productActivity(){
@@ -171,4 +187,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(tableRenew);
+    }
 }
