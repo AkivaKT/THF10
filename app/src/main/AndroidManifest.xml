@@ -20,6 +20,8 @@
         <activity android:name=".PriceActivity" />
         <activity android:name=".SalesActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity3" />
+        <activity android:name=".LoginActivity4" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
