@@ -193,3 +193,4 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(tableRenew);
     }
 }
+
