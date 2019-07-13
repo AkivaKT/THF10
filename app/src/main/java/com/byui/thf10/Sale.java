@@ -9,25 +9,25 @@ public class Sale extends JsonConvertible {
     }
 
     // data
-    public Product product;
-    public Price price;
+    public String product;
+    public String price;
     public Account account;
     public Date date;
-    public int amount;
+    public int quantity;
     public boolean discount;
     public float shippingCost;
     public int created_by;
 
     //getters
 
-    public Price getPrice_id(){ return price; }
+    public String getPrice_id(){ return price; }
     public Account getAccount_id(){ return account; }
-    public Product getProduct_id(){ return product; }
+    public String getProduct_id(){ return product; }
     public Date getDate() {
         return date;
     }
     public int getAmount() {
-        return amount;
+        return quantity;
     }
     public boolean getDiscount() {
         return discount;
@@ -41,8 +41,8 @@ public class Sale extends JsonConvertible {
 
     //setters
 
-    public void setPrice_id(Price price){ this.price = price; }
-    public void setProduct_id(Product product){ this.product = product; }
+    public void setPrice(String price){ this.price = price; }
+    public void setProduct(String product){ this.product = product; }
     public void setAccount_id(Account account){ this.account = account; }
     public void setCreated_by(int created_by) {
         this.created_by = created_by;
@@ -50,8 +50,8 @@ public class Sale extends JsonConvertible {
     public void setDate(Date date) {
         this.date = date;
     }
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setQuantity(String amount) {
+        this.quantity = quantity;
     }
     public void setDiscount(boolean discount) {
         this.discount = discount;
