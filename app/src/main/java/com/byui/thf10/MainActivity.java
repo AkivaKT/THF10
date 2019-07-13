@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // login
-        id = (EditText)findViewById(R.id.typeId);
-        password = (EditText)findViewById(R.id.typePassword);
-        login = (Button)findViewById(R.id.clickLogin);
-        info = (TextView)findViewById(R.id.incorrect);
+        id = findViewById(R.id.typeId);
+        password = findViewById(R.id.typePassword);
+        login = findViewById(R.id.clickLogin);
+        info = findViewById(R.id.incorrect);
         info.setText("Remained attemps: 5");
         accounts = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void validate(String userName, String userPassword) {
 
-        Boolean userExist = true;
+        boolean userExist = true;
         // check id and password in this function.
         for (Account user : accounts) {
             Log.d(TAG, "sdd password is " + user.checkPassword(userPassword) + accounts.size());
@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 if (user.checkPassword(userPassword)) {
                     Log.d(TAG, "sdd User and password  matches with" + userName + userPassword);
                     //woo change here LoginActivity to LoginActivity2
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity2.class);
                     startActivity(loginIntent);
                     break;
                 } else {
                     Log.d(TAG, "sdd but with wrong password" + userName);
                     loginCounter--;
-                    info.setText("Remained attemps: " + String.valueOf(loginCounter));
+                    info.setText("Remained attemps: " + loginCounter);
                     Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
                     userExist = true;
                     if (loginCounter == 0) {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (!userExist) {
             loginCounter--;
-            info.setText("Remained attemps: " + String.valueOf(loginCounter));
+            info.setText("Remained attemps: " + loginCounter);
             Toast.makeText(getApplicationContext(), "No such users", Toast.LENGTH_SHORT).show();
             if (loginCounter == 0) {
                 login.setEnabled(false);

@@ -121,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
         int flag = 1;
-        // when i=-1, loop will display heading of each column
-        // then usually data will be display from i=0 to jArray.length()
         for (int i = -1; i < prices.size(); i++) {
             TableRow tr = new TableRow(LoginActivity.this);
             tr.setLayoutParams(new TableRow.LayoutParams(
@@ -130,23 +128,23 @@ public class LoginActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // this will be executed once
             if (flag == 1) {
-                TextView b3 = new TextView(LoginActivity.this);
-                b3.setText("Date");
-                b3.setTextColor(Color.BLUE);
-                b3.setTextSize(15);
-                tr.addView(b3);
-                TextView b4 = new TextView(LoginActivity.this);
-                b4.setPadding(10, 0, 0, 0);
-                b4.setTextSize(15);
-                b4.setText("content");
-                b4.setTextColor(Color.BLUE);
-                tr.addView(b4);
-                TextView b5 = new TextView(LoginActivity.this);
-                b5.setPadding(10, 0, 0, 0);
-                b5.setText("product");
-                b5.setTextColor(Color.BLUE);
-                b5.setTextSize(15);
-                tr.addView(b5);
+                TextView c1 = new TextView(LoginActivity.this);
+                c1.setText("Date");
+                c1.setTextColor(Color.BLUE);
+                c1.setTextSize(15);
+                tr.addView(c1);
+                TextView c2 = new TextView(LoginActivity.this);
+                c2.setPadding(10, 0, 0, 0);
+                c2.setTextSize(15);
+                c2.setText("content");
+                c2.setTextColor(Color.BLUE);
+                tr.addView(c2);
+                TextView c3 = new TextView(LoginActivity.this);
+                c3.setPadding(10, 0, 0, 0);
+                c3.setText("product");
+                c3.setTextColor(Color.BLUE);
+                c3.setTextSize(15);
+                tr.addView(c3);
                 tv.addView(tr);
                 final View vline = new View(LoginActivity.this);
                 vline.setLayoutParams(new
@@ -156,27 +154,26 @@ public class LoginActivity extends AppCompatActivity {
                 flag = 0;
             } else {
                 Price p = prices.get(i);
-
-                TextView b = new TextView(LoginActivity.this);
+                TextView v1 = new TextView(LoginActivity.this);
                 String str = String.valueOf(p.getDescription());
-                b.setText(str);
-                b.setTextColor(Color.RED);
-                b.setTextSize(12);
-                tr.addView(b);
-                TextView b1 = new TextView(LoginActivity.this);
-                b1.setPadding(10, 0, 0, 0);
-                b1.setTextSize(12);
+                v1.setText(str);
+                v1.setTextColor(Color.RED);
+                v1.setTextSize(12);
+                tr.addView(v1);
+                TextView v2 = new TextView(LoginActivity.this);
+                v2.setPadding(10, 0, 0, 0);
+                v2.setTextSize(12);
                 String str1 = p.getStart_date() ;
-                b1.setText(str1);
-                b1.setTextColor(Color.RED);
-                tr.addView(b1);
-                TextView b2 = new TextView(LoginActivity.this);
-                b2.setPadding(10, 0, 0, 0);
+                v2.setText(str1);
+                v2.setTextColor(Color.RED);
+                tr.addView(v2);
+                TextView v3 = new TextView(LoginActivity.this);
+                v3.setPadding(10, 0, 0, 0);
                 String str2 = p.getEnd_date();
-                b2.setText(str2);
-                b2.setTextColor(Color.RED);
-                b2.setTextSize(12);
-                tr.addView(b2);
+                v3.setText(str2);
+                v3.setTextColor(Color.RED);
+                v3.setTextSize(12);
+                tr.addView(v3);
                 tv.addView(tr);
                 final View vline1 = new View(LoginActivity.this);
                 vline1.setLayoutParams(new
