@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void maketable() {
 
-        TableLayout tv = (TableLayout) findViewById(R.id.table);
+        TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
         int flag = 1;
         // when i=-1, loop will display heading of each column
@@ -157,14 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 TextView b1 = new TextView(LoginActivity.this);
                 b1.setPadding(10, 0, 0, 0);
                 b1.setTextSize(12);
-                Date str1 = p.getStart_date();
-                SimpleDateFormat formatter = new SimpleDateFormat(
-                        "dd/MM/yyyy");
-                try {
-                    formatter.parse(formatter.format(str1));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Date str1 = p.getStart_date() ;
                 b1.setText(str1.toString());
                 b1.setTextColor(Color.RED);
                 tr.addView(b1);
