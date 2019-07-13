@@ -1,12 +1,9 @@
 package com.byui.thf10;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,13 +13,15 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.*;
+
 
 import static android.content.ContentValues.TAG;
 
@@ -33,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button sale;
     private FireStore firedb;
     private List<Price> prices;
+    private BroadcastReceiver tableRenew;
 
 
     @Override
@@ -72,7 +72,17 @@ public class LoginActivity extends AppCompatActivity {
         firedb = new FireStore(db);
 
         pullData();
-        sendWelcomeNotification();
+
+
+        tableRenew = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                pullData();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(tableRenew, new IntentFilter("Table needs renewal"));
     }
 
     public void productActivity(){
@@ -177,29 +187,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void sendWelcomeNotification() {
-        // Channel ID is arbitrary and only used on API level 26 and higher
-        String channel_id = "loginSuccess.notifications.NOTIFICATION_CHANNEL";
-
-        // NotificationChannel must be used for API level 26 and higher
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channel_id,
-                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Hello World")
-                .setContentText("Success Login !!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-
-        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(tableRenew);
     }
-
 }
 
