@@ -20,7 +20,6 @@ public class Price extends JsonConvertible{
 
     public float getPrice(){return amount;}
 
-    public String getDescription() { return description; }
 
     // setters
 
