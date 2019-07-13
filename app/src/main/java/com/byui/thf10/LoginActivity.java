@@ -122,19 +122,19 @@ public class LoginActivity extends AppCompatActivity {
             // this will be executed once
             if (flag == 1) {
                 TextView b3 = new TextView(LoginActivity.this);
-                b3.setText("column heading 1");
+                b3.setText("Date");
                 b3.setTextColor(Color.BLUE);
                 b3.setTextSize(15);
                 tr.addView(b3);
                 TextView b4 = new TextView(LoginActivity.this);
                 b4.setPadding(10, 0, 0, 0);
                 b4.setTextSize(15);
-                b4.setText("column heading 2");
+                b4.setText("content");
                 b4.setTextColor(Color.BLUE);
                 tr.addView(b4);
                 TextView b5 = new TextView(LoginActivity.this);
                 b5.setPadding(10, 0, 0, 0);
-                b5.setText("column heading 3");
+                b5.setText("product");
                 b5.setTextColor(Color.BLUE);
                 b5.setTextSize(15);
                 tr.addView(b5);
@@ -152,11 +152,11 @@ public class LoginActivity extends AppCompatActivity {
                 String str = String.valueOf(p.getDescription());
                 b.setText(str);
                 b.setTextColor(Color.RED);
-                b.setTextSize(15);
+                b.setTextSize(12);
                 tr.addView(b);
                 TextView b1 = new TextView(LoginActivity.this);
                 b1.setPadding(10, 0, 0, 0);
-                b1.setTextSize(15);
+                b1.setTextSize(12);
                 Date str1 = p.getStart_date();
                 SimpleDateFormat formatter = new SimpleDateFormat(
                         "dd/MM/yyyy");
@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str2 = p.getEnd_date().toString();
                 b2.setText(str2);
                 b2.setTextColor(Color.RED);
-                b2.setTextSize(15);
+                b2.setTextSize(12);
                 tr.addView(b2);
                 tv.addView(tr);
                 final View vline1 = new View(LoginActivity.this);
