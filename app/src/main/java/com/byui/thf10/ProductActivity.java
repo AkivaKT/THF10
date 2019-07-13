@@ -108,6 +108,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         if (getType == null || getType.trim().equals("") || getSeries == null || getSeries.trim().equals("") || getPattern == null || getPattern.trim().equals("") || getColor1 == null || getColor1.trim().equals("") || getColor2 == null || getColor2.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
+        
         else {
             product.setType(getType);
             product.setSeries(getSeries);
