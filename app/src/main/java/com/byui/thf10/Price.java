@@ -2,7 +2,6 @@ package com.byui.thf10;
 
 import androidx.annotation.Nullable;
 
-import java.time.LocalDate;
 
 public class Price extends JsonConvertible{
     private String start_date;

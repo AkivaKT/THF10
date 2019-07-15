@@ -110,8 +110,6 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                                       }
         );
 
-
-
     }
 
     public void saveInfo() {
