@@ -1,5 +1,8 @@
 package com.byui.thf10;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,11 +46,13 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     boolean slongMonth = true;
     boolean elongMonth = true;
     private FireStore fireDb;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_price);
+        context = this;
 
         // CONNECTION WITH DATABASE
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -56,13 +61,13 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         // create spinner
         setupSpinner();
         // Edit text
-        newPrice = findViewById(R.id.NewPrice);
+        newPrice = findViewById(R.id.newPrice);
         description = findViewById(R.id.description);
 
         // Buttons
-        Button saveButton = findViewById(R.id.SaveButton);
+        Button saveButton = findViewById(R.id.saveButton);
         Button sendButton = findViewById(R.id.sendButton);
-        Button showButton;
+        Button showButton = findViewById(R.id.showButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +75,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         );
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +83,13 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         );
+
+        showButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteDialog();
+            }
+        });
     }
 
     public void saveInfo() {
@@ -114,11 +127,11 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
         priceList.clear();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
-        updateTable();
+        TableLayout tv = findViewById(R.id.table);
+        tv.removeAllViewsInLayout();
     }
 
     public void setupSpinner(){
-
         startMonthSpinner = findViewById(R.id.sMonth);
         startMonthSpinner.setOnItemSelectedListener(this);
         startDaySpinner = findViewById(R.id.sDay);
@@ -268,5 +281,34 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 tv.addView(view);  // add line below each row
             }
         }
+    }
+
+    private void showDeleteDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select the price to delete:");
+        String[] priceString = {};
+        boolean[] checks = {};
+        for (int i = 0; i < priceList.size(); i++){
+            Price p = priceList.get(i);
+            priceString[i] = ("$ " + p.getPrice() + " " + p.getDescription());
+            checks[i] = false;
+        }
+        builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // user checked or unchecked a box
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // user clicked OK
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

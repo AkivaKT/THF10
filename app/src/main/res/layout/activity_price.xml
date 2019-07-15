@@ -7,7 +7,7 @@
     tools:context=".PriceActivity">
 
     <Button
-        android:id="@+id/SaveButton"
+        android:id="@+id/saveButton"
         android:layout_width="127dp"
         android:layout_height="52dp"
         android:layout_marginEnd="4dp"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toStartOf="@+id/SaveButton" />
 
     <EditText
-        android:id="@+id/NewPrice"
+        android:id="@+id/newPrice"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -66,19 +66,16 @@
         android:id="@+id/sYear"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="516dp"
         android:layout_x="284dp"
         android:layout_y="153dp"
         android:ems="10"
         android:entries="@array/Year"
         android:inputType="date"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/SaveButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.973" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/sMonth"
@@ -263,18 +260,18 @@
         android:id="@+id/table"
         android:layout_width="381dp"
         android:layout_height="316dp"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/SaveButton"
+        android:layout_marginBottom="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/showButton"
         android:layout_width="126dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="268dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="16dp"
         android:layout_x="10dp"
         android:layout_y="635dp"
         android:text="Delete Price"
