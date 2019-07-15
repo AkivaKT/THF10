@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.typePassword);
         login = findViewById(R.id.clickLogin);
         info = findViewById(R.id.incorrect);
-        info.setText("Remained attemps: 5");
+        info.setText("Remained attempts: 5");
         accounts = new ArrayList<>();
 
         // title
@@ -63,19 +63,17 @@ public class MainActivity extends AppCompatActivity {
         boolean userExist = true;
         // check id and password in this function.
         for (Account user : accounts) {
-            Log.d(TAG, "sdd password is " + user.checkPassword(userPassword) + accounts.size());
             if (user.getUserName().equals(userName)) {
-                Log.d(TAG, "sdd User matches with" + userName);
                 if (user.checkPassword(userPassword)) {
-                    Log.d(TAG, "sdd User and password  matches with" + userName + userPassword);
+                    Log.d(TAG, "User and password  matches with" + userName);
                     //woo change here LoginActivity to LoginActivity2
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity2.class);
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     break;
                 } else {
                     Log.d(TAG, "sdd but with wrong password" + userName);
                     loginCounter--;
-                    info.setText("Remained attemps: " + loginCounter);
+                    info.setText("Remained attempts: " + loginCounter);
                     Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
                     userExist = true;
                     if (loginCounter == 0) {
@@ -98,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void pullAccounts(){
         firedb.pullCollection("Account", "com.byui.thf10.Account", new CallBackList() {
             @Override
@@ -111,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void createAccount(){
         Calendar c1 = Calendar.getInstance();
@@ -131,8 +127,4 @@ public class MainActivity extends AppCompatActivity {
         a.add(a1);
         firedb.storeJson(a, "Account");
     }
-
-
-
-
 }

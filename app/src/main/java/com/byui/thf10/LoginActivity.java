@@ -27,9 +27,6 @@ import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button product;
-    private Button price;
-    private Button sale;
     private FireStore firedb;
     private List<Price> prices;
     private BroadcastReceiver tableRenew;
@@ -41,9 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // main button
-        product = findViewById(R.id.product);
-        price   = findViewById(R.id.price);
-        sale    = findViewById(R.id.sale);
+        Button product = findViewById(R.id.product);
+        Button price   = findViewById(R.id.price);
+        Button sale    = findViewById(R.id.sale);
 
         product.setOnClickListener(new View.OnClickListener() {
             @Override
