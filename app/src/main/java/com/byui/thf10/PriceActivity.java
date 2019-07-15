@@ -88,6 +88,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 showDeleteDialog();
+                updateTable();
             }
         });
     }
@@ -298,6 +299,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             Price p = priceList.get(i);
             priceString[i] = ("$ " + p.getPrice() + " " + p.getDescription());
             checks[i] = false;
+            Log.d(TAG, "sdd load");
         }
         builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
@@ -314,7 +316,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
         builder.setNegativeButton("Cancel", null);
-
+        Log.d(TAG, "sddd");
         AlertDialog dialog = builder.create();
         dialog.show();
     }
