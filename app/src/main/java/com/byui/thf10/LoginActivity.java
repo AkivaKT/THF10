@@ -28,7 +28,7 @@ import static android.content.ContentValues.TAG;
 public class LoginActivity extends AppCompatActivity {
 
     private FireStore firedb;
-    private List<Price> prices;
+    private List<Sale> sales;
     private BroadcastReceiver tableRenew;
 
 
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
         pullData();
 
-
+        // update table when data was sent
         tableRenew = new BroadcastReceiver()
         {
             @Override
@@ -99,32 +99,33 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void pullData(){
-        prices = new ArrayList<>();
-        firedb.pullCollection("Prices", "com.byui.thf10.Price", new CallBackList() {
+        sales = new ArrayList<>();
+        firedb.pullCollection("Sales", "com.byui.thf10.Sale", new CallBackList() {
             @Override
             public void onCallback(List<Object> jsonList) {
                 for (Object i : jsonList) {
-                    prices.add((Price) i);
-                    Log.d(TAG, "data loaded.");
+                    sales.add((Sale) i);
+                    Log.d(TAG, "table data loaded.");
                 }
                 Toast.makeText(getApplicationContext(), "check the table", Toast.LENGTH_SHORT).show();
-                maketable();
+                makeTable();
             }
         });
     }
 
-    private void maketable() {
+    private void makeTable() {
 
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
-        int flag = 1;
-        for (int i = -1; i < prices.size(); i++) {
+        int row = 1;
+        for (int i = -1; i < sales.size(); i++) {
             TableRow tr = new TableRow(LoginActivity.this);
             tr.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // this will be executed once
-            if (flag == 1) {
+            if (row == 1) {
+                // create textview and headings
                 TextView c1 = new TextView(LoginActivity.this);
                 c1.setText("Date");
                 c1.setTextColor(Color.BLUE);
@@ -143,16 +144,16 @@ public class LoginActivity extends AppCompatActivity {
                 c3.setTextSize(15);
                 tr.addView(c3);
                 tv.addView(tr);
-                final View vline = new View(LoginActivity.this);
-                vline.setLayoutParams(new
+                final View view = new View(LoginActivity.this);
+                view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
-                vline.setBackgroundColor(Color.BLUE);
-                tv.addView(vline); // add line below heading
-                flag = 0;
+                view.setBackgroundColor(Color.BLUE);
+                tv.addView(view); // add line below heading
+                row = 0;
             } else {
-                Price p = prices.get(i);
+                Sale sale = sales.get(i);
                 TextView v1 = new TextView(LoginActivity.this);
-                String str = String.valueOf(p.getDescription());
+                String str = String.valueOf(sale.getDate());
                 v1.setText(str);
                 v1.setTextColor(Color.RED);
                 v1.setTextSize(12);
@@ -160,23 +161,23 @@ public class LoginActivity extends AppCompatActivity {
                 TextView v2 = new TextView(LoginActivity.this);
                 v2.setPadding(10, 0, 0, 0);
                 v2.setTextSize(12);
-                String str1 = p.getStart_date() ;
+                String str1 = sale.getQuantity();
                 v2.setText(str1);
                 v2.setTextColor(Color.RED);
                 tr.addView(v2);
                 TextView v3 = new TextView(LoginActivity.this);
                 v3.setPadding(10, 0, 0, 0);
-                String str2 = p.getEnd_date();
+                String str2 = sale.getQuantity();
                 v3.setText(str2);
                 v3.setTextColor(Color.RED);
                 v3.setTextSize(12);
                 tr.addView(v3);
                 tv.addView(tr);
-                final View vline1 = new View(LoginActivity.this);
-                vline1.setLayoutParams(new
+                final View view = new View(LoginActivity.this);
+                view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-                vline1.setBackgroundColor(Color.WHITE);
-                tv.addView(vline1);  // add line below each row
+                view.setBackgroundColor(Color.WHITE);
+                tv.addView(view);  // add line below each row
             }
         }
     }

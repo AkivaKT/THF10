@@ -79,7 +79,7 @@ public class FireStore {
                                 try {
                                     Object obj = doc.toObject(Class.forName(c));
                                     list.add(obj);
-                                    Log.d(TAG, "account added" + doc.toString());
+                                    Log.d(TAG, "data added" + doc.toString());
                                 } catch (ClassNotFoundException e) {
                                     Log.d(TAG, "No such class");
                                 }
