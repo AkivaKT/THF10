@@ -156,11 +156,11 @@ public class LoginActivity extends AppCompatActivity {
                 String str = String.valueOf(sale.getDate());
                 v1.setText(str);
                 v1.setTextColor(Color.RED);
-                v1.setTextSize(12);
+                v1.setTextSize(15);
                 tr.addView(v1);
                 TextView v2 = new TextView(LoginActivity.this);
                 v2.setPadding(10, 0, 0, 0);
-                v2.setTextSize(12);
+                v2.setTextSize(15);
                 String str1 = sale.getQuantity();
                 v2.setText(str1);
                 v2.setTextColor(Color.RED);
@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str2 = sale.getQuantity();
                 v3.setText(str2);
                 v3.setTextColor(Color.RED);
-                v3.setTextSize(12);
+                v3.setTextSize(15);
                 tr.addView(v3);
                 tv.addView(tr);
                 final View view = new View(LoginActivity.this);

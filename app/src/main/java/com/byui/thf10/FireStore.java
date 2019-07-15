@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,7 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -25,17 +23,12 @@ import static android.content.ContentValues.TAG;
 public class FireStore {
 
     private final FirebaseFirestore db;
-    private DatabaseReference mDatabase;
-    private String Product;
-    private String Sales;
-    private String Price;
 
     public FireStore(FirebaseFirestore db) {
         this.db = db;
     }
 
     public void setup() {
-
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -67,8 +60,6 @@ public class FireStore {
 
     public void pullCollection(final String collection, final String c, final CallBackList callBackList) {
         CollectionReference collectionReference = db.collection(collection);
-
-
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

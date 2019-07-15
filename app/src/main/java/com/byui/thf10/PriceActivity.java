@@ -93,6 +93,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         // Buttons
         Button saveButton = findViewById(R.id.SaveButton);
         Button sendButton = findViewById(R.id.sendButton);
+        Button showButton;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,6 +186,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
