@@ -55,7 +55,6 @@ public class FireStore {
                         }
                     });
         }
-
     }
 
     public void pullCollection(final String collection, final String c, final CallBackList callBackList) {
