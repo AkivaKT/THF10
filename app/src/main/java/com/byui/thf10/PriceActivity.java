@@ -1,6 +1,7 @@
 package com.byui.thf10;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -26,7 +30,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private EditText newPrice;
     private EditText description;
-    private ArrayList<JsonConvertible> priceList = new ArrayList<>();
+    private ArrayList<Price> priceList = new ArrayList<>();
     private Spinner startMonthSpinner;
     private Spinner startYearSpinner;
     private Spinner startDaySpinner;
@@ -50,42 +54,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         fireDb = new FireStore(db);
 
         // create spinner
-        startMonthSpinner = findViewById(R.id.sMonth);
-        startMonthSpinner.setOnItemSelectedListener(this);
-        startDaySpinner = findViewById(R.id.sDay);
-        startDaySpinner.setOnItemSelectedListener(this);
-        startYearSpinner = findViewById(R.id.sYear);
-        startYearSpinner.setOnItemSelectedListener(this);
-
-        endMonthSpinner = findViewById(R.id.eMonth);
-        endMonthSpinner.setOnItemSelectedListener(this);
-        endDaySpinner = findViewById(R.id.eDay);
-        endDaySpinner.setOnItemSelectedListener(this);
-        endYearSpinner = findViewById(R.id.eYear);
-        endYearSpinner.setOnItemSelectedListener(this);
-
-        // Adapters for months
-        Integer[] shortMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
-        List<Integer> sMonthList = new ArrayList<>(Arrays.asList(shortMonth));
-        stAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item , sMonthList);
-
-        Integer[] shorterMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
-        List<Integer> stMonthList = new ArrayList<>(Arrays.asList(shorterMonth));
-        sAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item , stMonthList);
-
-        Integer[] longMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        List<Integer> lMonthList = new ArrayList<>(Arrays.asList(longMonth));
-        lAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item , lMonthList);
-
-        stAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        startDaySpinner.setAdapter(lAdapter);
-        endDaySpinner.setAdapter(lAdapter);
-
+        setupSpinner();
         // Edit text
         newPrice = findViewById(R.id.NewPrice);
         description = findViewById(R.id.description);
@@ -126,7 +95,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         else {
             LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
-            Log.i(TAG, "sdd " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
+            Log.i(TAG, "data: " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
             price.setAmount(Float.parseFloat(getNewPrice));
             price.setStart_date(localDate.toString());
             localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
@@ -135,14 +104,56 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             price.setActive(true);
             price.setDescription(descrip);
             Log.i(TAG, "New Price created.");
+            updateTable();
         }
     }
 
     public void sendInfo(){
-        fireDb.storeJson(priceList, "Prices");
+        ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>) (Object)priceList;
+        fireDb.storeJson(data, "Prices");
         Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
         priceList.clear();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
+        updateTable();
+    }
+
+    public void setupSpinner(){
+
+        startMonthSpinner = findViewById(R.id.sMonth);
+        startMonthSpinner.setOnItemSelectedListener(this);
+        startDaySpinner = findViewById(R.id.sDay);
+        startDaySpinner.setOnItemSelectedListener(this);
+        startYearSpinner = findViewById(R.id.sYear);
+        startYearSpinner.setOnItemSelectedListener(this);
+
+        endMonthSpinner = findViewById(R.id.eMonth);
+        endMonthSpinner.setOnItemSelectedListener(this);
+        endDaySpinner = findViewById(R.id.eDay);
+        endDaySpinner.setOnItemSelectedListener(this);
+        endYearSpinner = findViewById(R.id.eYear);
+        endYearSpinner.setOnItemSelectedListener(this);
+
+        // Adapters for months
+        Integer[] shortMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
+        List<Integer> sMonthList = new ArrayList<>(Arrays.asList(shortMonth));
+        stAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , sMonthList);
+
+        Integer[] shorterMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
+        List<Integer> stMonthList = new ArrayList<>(Arrays.asList(shorterMonth));
+        sAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , stMonthList);
+
+        Integer[] longMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+        List<Integer> lMonthList = new ArrayList<>(Arrays.asList(longMonth));
+        lAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , lMonthList);
+
+        stAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startDaySpinner.setAdapter(lAdapter);
+        endDaySpinner.setAdapter(lAdapter);
     }
 
     @Override
@@ -187,9 +198,75 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
 
+    private void updateTable() {
+        TableLayout tv = findViewById(R.id.table);
+        tv.removeAllViewsInLayout();
+        int row = 1;
+        for (int i = -1; i < priceList.size(); i++) {
+            TableRow tr = new TableRow(PriceActivity.this);
+            tr.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // this will be executed once
+            if (row == 1) {
+                // create text view and headings
+                TextView c1 = new TextView(PriceActivity.this);
+                c1.setText("Date");
+                c1.setTextColor(Color.BLUE);
+                c1.setTextSize(15);
+                tr.addView(c1);
+                TextView c2 = new TextView(PriceActivity.this);
+                c2.setPadding(10, 0, 0, 0);
+                c2.setTextSize(15);
+                c2.setText("content");
+                c2.setTextColor(Color.BLUE);
+                tr.addView(c2);
+                TextView c3 = new TextView(PriceActivity.this);
+                c3.setPadding(10, 0, 0, 0);
+                c3.setText("product");
+                c3.setTextColor(Color.BLUE);
+                c3.setTextSize(15);
+                tr.addView(c3);
+                tv.addView(tr);
+                final View view = new View(PriceActivity.this);
+                view.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
+                view.setBackgroundColor(Color.BLUE);
+                tv.addView(view); // add line below heading
+                row = 0;
+            } else {
+                Price price = priceList.get(i);
+                TextView v1 = new TextView(PriceActivity.this);
+                String str = String.valueOf(price.getStart_date());
+                v1.setText(str);
+                v1.setTextColor(Color.RED);
+                v1.setTextSize(15);
+                tr.addView(v1);
+                TextView v2 = new TextView(PriceActivity.this);
+                v2.setPadding(10, 0, 0, 0);
+                v2.setTextSize(15);
+                String str1 = price.getEnd_date();
+                v2.setText(str1);
+                v2.setTextColor(Color.RED);
+                tr.addView(v2);
+                TextView v3 = new TextView(PriceActivity.this);
+                v3.setPadding(10, 0, 0, 0);
+                String str2 = price.getDescription();
+                v3.setText(str2);
+                v3.setTextColor(Color.RED);
+                v3.setTextSize(15);
+                tr.addView(v3);
+                tv.addView(tr);
+                final View view = new View(PriceActivity.this);
+                view.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+                view.setBackgroundColor(Color.WHITE);
+                tv.addView(view);  // add line below each row
+            }
+        }
     }
 }
