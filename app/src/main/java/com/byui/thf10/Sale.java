@@ -9,11 +9,11 @@ public class Sale extends JsonConvertible {
     }
 
     // data
-    public String product;
-    public String price;
-    public Account account;
-    public Date date;
-    public String quantity;
+    private String product;
+    private String price;
+    private Account account;
+    private Date date;
+    private String quantity;
 
     //getters
 
