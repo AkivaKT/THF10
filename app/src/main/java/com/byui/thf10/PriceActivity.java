@@ -88,7 +88,6 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 showDeleteDialog();
-                updateTable();
             }
         });
     }
@@ -293,30 +292,36 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
-        String[] priceString = new String[priceList.size()];
-        final boolean[] checks = new boolean[priceList.size()];
+        final int index = priceList.size();
+        String[] priceString = new String[index];
+        final boolean[] checks = new boolean[index];
         for (int i = 0; i < priceList.size(); i++){
             Price p = priceList.get(i);
             priceString[i] = ("$ " + p.getPrice() + " " + p.getDescription());
             checks[i] = false;
-            Log.d(TAG, "sdd load");
         }
         builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checks[which] = isChecked;
-                Log.d(TAG, "sdd" + which);
             }
         });
 
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "sdd" + which);
+                int j = 0;
+                for (int i = 0; i < index; i++){
+                    if (checks[i]){
+                        priceList.remove(j);
+                    } else{
+                        j++;
+                    }
+                }
+                updateTable();
             }
         });
         builder.setNegativeButton("Cancel", null);
-        Log.d(TAG, "sddd");
         AlertDialog dialog = builder.create();
         dialog.show();
     }
