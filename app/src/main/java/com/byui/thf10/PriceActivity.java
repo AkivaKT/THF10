@@ -109,7 +109,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         else {
             LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
             Log.i(TAG, "data: " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
-            price.setAmount(Float.parseFloat(getNewPrice));
+            //price.setAmount(Float.parseFloat(getNewPrice));
             price.setStart_date(localDate.toString());
             localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
             price.setEnd_date(localDate.toString());
