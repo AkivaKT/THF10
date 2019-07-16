@@ -3,12 +3,14 @@ package com.byui.thf10;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -227,6 +229,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         sendButtonNotification();
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
     }
 
     public void pullProducts(){
@@ -264,7 +267,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void populateProducts(){
         for (Product i : ProductList){
-            Log.d(TAG, "sddd product is converted.");
+            Log.d(TAG, "product is converted.");
             String pattern = i.getName();
             ProductType.add(pattern);
             ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
@@ -378,7 +381,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                 final View view = new View(SalesActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }

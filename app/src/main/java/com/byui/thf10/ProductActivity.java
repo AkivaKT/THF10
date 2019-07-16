@@ -397,7 +397,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                 final View view = new View(ProductActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 10));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }

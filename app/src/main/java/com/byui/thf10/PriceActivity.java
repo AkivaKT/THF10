@@ -338,7 +338,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 final View view = new View(PriceActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }
