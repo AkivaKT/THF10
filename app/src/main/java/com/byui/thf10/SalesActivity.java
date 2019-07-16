@@ -1,8 +1,16 @@
 package com.byui.thf10;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +24,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
-import static android.R.layout.simple_spinner_item;
 import static android.content.ContentValues.TAG;
 
 public class SalesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -41,6 +47,14 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     private Product product;
     private Price price;
     private String account;
+    private Spinner MonthSpinner;
+    private Spinner YearSpinner;
+    private Spinner DaySpinner;
+    private ArrayAdapter<Integer> lAdapter;
+    private ArrayAdapter<Integer> sAdapter;
+    private ArrayAdapter<Integer> stAdapter;
+    boolean longMonth = true;
+    Context context;
 
     public SalesActivity() {
     }
@@ -49,6 +63,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales);
+        context = this;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
@@ -87,6 +102,36 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         // Quantity Entry box
         Quantity = findViewById(R.id.Quantity);
 
+        //date spinners
+        MonthSpinner = findViewById(R.id.Month);
+        MonthSpinner.setOnItemSelectedListener(this);
+        DaySpinner = findViewById(R.id.Day);
+        DaySpinner.setOnItemSelectedListener(this);
+        YearSpinner = findViewById(R.id.Year);
+        YearSpinner.setOnItemSelectedListener(this);
+
+        // Adapters for months
+        Integer[] shortMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28};
+        List<Integer> sMonthList = new ArrayList<>(Arrays.asList(shortMonth));
+        stAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , sMonthList);
+
+        Integer[] shorterMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
+        List<Integer> stMonthList = new ArrayList<>(Arrays.asList(shorterMonth));
+        sAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , stMonthList);
+
+        Integer[] longMonth = new Integer[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+        List<Integer> lMonthList = new ArrayList<>(Arrays.asList(longMonth));
+        lAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item , lMonthList);
+
+        stAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        DaySpinner.setAdapter(lAdapter);
+
+        // buttons
         Button saveButton;
         Button sendButton;
         Button deleteButton;
@@ -109,17 +154,29 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                                       }
         );
 
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteDialog();
+            }
+        });
+
     }
 
     public void saveInfo() {
         String getQuantity = Quantity.getText().toString();
-
-        Sale sale = new Sale();
+        Sale sale          = new Sale();
+        String year       = YearSpinner.getSelectedItem().toString();
+        int month         = MonthSpinner.getSelectedItemPosition();
+        String day        = DaySpinner.getSelectedItem().toString();
 
         if (getQuantity == null || getQuantity.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
+            LocalDate localDate = LocalDate.of(Integer.parseInt(year), month + 1, Integer.parseInt(day));
+            sale.setDate(localDate.toString());
             sale.setQuantity(getQuantity);
             sale.setPrice(price);
             sale.setProduct(product);
@@ -144,12 +201,32 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         } else if (parent.getId() == R.id.Account){
             account = text;
         }
+
+        if (parent.getId() == R.id.eMonth){
+            if (Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
+                    !longMonth){
+                DaySpinner.setAdapter(lAdapter);
+                Log.i(TAG,"sdd day limit + changed");
+                longMonth = true;
+            } else if (position + 1 == 2){
+                DaySpinner.setAdapter(stAdapter);
+                Log.i(TAG,"sdd day limit - changed");
+                longMonth = false;
+            } else if (!Arrays.asList(1, 3, 5, 7, 8, 10, 12).contains(position + 1) &&
+                    longMonth){
+                DaySpinner.setAdapter(sAdapter);
+                longMonth = false;
+            }
+        }
     }
 
     public void sendInfo(){
         ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)salesList;
         firedb.storeJson(data, "Sales");
         salesList.clear();
+        sendButtonNotification();
+        TableLayout tv = findViewById(R.id.table);
+        tv.removeAllViewsInLayout();
     }
 
     public void pullProducts(){
@@ -245,9 +322,10 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                 tr.addView(c3);
                 TextView c4 = new TextView(SalesActivity.this);
                 c4.setPadding(15, 0, 0, 0);
-                c4.setText("amount");
+                c4.setText("Amount");
                 c4.setTextColor(Color.BLUE);
                 c4.setTextSize(15);
+                tr.addView(c4);
                 TextView c5 = new TextView(SalesActivity.this);
                 c5.setPadding(15, 0, 0, 0);
                 c5.setText("Sale");
@@ -284,7 +362,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                 tr.addView(v3);
                 TextView v4 = new TextView(SalesActivity.this);
                 v4.setPadding(15, 0, 0, 0);
-                String str4 = String.valueOf(sale.getPrice().getPrice() * Integer.parseInt(sale.getQuantity()));
+                String str4 = "$" + (sale.getPrice().getPrice() * Integer.parseInt(sale.getQuantity()));
                 v4.setText(str4);
                 v4.setTextColor(Color.RED);
                 v4.setTextSize(15);
@@ -306,5 +384,72 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /***
+     * send notification.
+     */
+    public void sendButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "price.sendButton.notifications.NOTIFICATION_CHANNEL";
 
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Send data to database.")
+                .setContentText("Just sent a price data.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
+    private void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select the sale to delete:");
+        final int index = salesList.size();
+        String[] saleString = new String[index];
+        final boolean[] checks = new boolean[index];
+        for (int i = 0; i < salesList.size(); i++){
+            Sale p = salesList.get(i);
+            saleString[i] = (p.getDate() + " " + p.getProduct().getName() + " $" +
+                    Integer.parseInt(p.getQuantity()) * p.getPrice().getPrice());
+            checks[i] = false;
+        }
+        builder.setMultiChoiceItems(saleString, checks, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                checks[which] = isChecked;
+            }
+        });
+
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (salesList.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    int j = 0;
+                    for (int i = 0; i < index; i++) {
+                        if (checks[i]){
+                            salesList.remove(j);
+                        } else{
+                            j++;
+                        }
+                    }
+                    updateTable();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
