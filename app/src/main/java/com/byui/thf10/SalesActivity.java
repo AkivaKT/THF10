@@ -79,7 +79,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                 android.R.layout.simple_spinner_item, AccountType);
 
         AccountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        AccountSpinner.setAdapter(ProductAdapter);
+        AccountSpinner.setAdapter(AccountAdapter);
         AccountSpinner.setOnItemSelectedListener(this);
 
 
