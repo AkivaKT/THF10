@@ -9,18 +9,18 @@ public class Sale extends JsonConvertible {
     }
 
     // data
-    private String product;
-    private String price;
+    private Product product;
+    private Price price;
     private String account;
-    private Date date;
+    private String date;
     private String quantity;
 
     //getters
 
-    public String getPrice(){ return price; }
+    public Price getPrice(){ return price; }
     public String getAccount(){ return account; }
-    public String getProduct(){ return product; }
-    public Date getDate() {
+    public Product getProduct(){ return product; }
+    public String getDate() {
         return date;
     }
     public String getQuantity() {
@@ -29,10 +29,10 @@ public class Sale extends JsonConvertible {
 
     //setters
 
-    public void setPrice(String price){ this.price = price; }
-    public void setProduct(String product){ this.product = product; }
+    public void setPrice(Price price){ this.price = price; }
+    public void setProduct(Product product){ this.product = product; }
     public void setAccount(String account){ this.account = account; }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public void setQuantity(String quantity) {
