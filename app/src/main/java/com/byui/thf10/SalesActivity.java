@@ -36,6 +36,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     private Button deleteButton;
     private List<Product> ProductList;
     private List<Price> PriceList;
+    private List<String> ProductType;
 
     public SalesActivity() {
     }
@@ -49,25 +50,15 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         firedb = new FireStore(db);
         ProductList = new ArrayList<>();
         PriceList = new ArrayList<>();
+        ProductType = new ArrayList<String>();
 
         pullProducts();
-        pullPrices();
+        //pullPrices();
 
         // Product Spinner
         ProductSpinner = findViewById(R.id.Product);
         ProductSpinner.setOnItemSelectedListener(this);
 
-        List<String> ProductType = new ArrayList<String>();
-
-        populateProducts(ProductType);
-/*
-        ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, ProductType);
-
-        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ProductSpinner.setAdapter(ProductAdapter);
-        ProductSpinner.setOnItemSelectedListener(this);
-*/
         // Price Spinner
         PriceSpinner = findViewById(R.id.Price);
         PriceSpinner.setOnItemSelectedListener(this);
@@ -138,7 +129,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void pullProducts(){
-        firedb.pullCollection("Products", "com.byui.thf10.Products", new CallBackList() {
+        firedb.pullCollection("Products", "com.byui.thf10.Product", new CallBackList() {
             @Override
             public void onCallback(List<Object> jsonList) {
                 for (Object i : jsonList) {
@@ -146,12 +137,13 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
                     Log.d(TAG, "Products loaded.");
                 }
                 Toast.makeText(getApplicationContext(), "Products List Loaded", Toast.LENGTH_SHORT).show();
+                populateProducts();
             }
         });
     }
 
     public void pullPrices(){
-        firedb.pullCollection("Prices", "com.byui.thf10.Prices", new CallBackList() {
+        firedb.pullCollection("Prices", "com.byui.thf10.Price", new CallBackList() {
             @Override
             public void onCallback(List<Object> jsonList) {
                 for (Object i : jsonList) {
@@ -170,8 +162,9 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
-    private void populateProducts(List<String> ProductType){
+    private void populateProducts(){
         for (Product i : ProductList){
+            Log.d(TAG, "sddd product is converted.");
             String pattern = i.getName();
             ProductType.add(pattern);
             ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
