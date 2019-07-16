@@ -127,9 +127,9 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
             Log.i(TAG, "data: " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
             price.setPrice(Float.parseFloat(getNewPrice));
-            price.setStart_date(localDate.toString());
+            price.setStart_Date(localDate.toString());
             localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
-            price.setEnd_date(localDate.toString());
+            price.setEnd_Date(localDate.toString());
             priceList.add(price);
             price.setActive(true);
             price.setDescription(descrip);
@@ -308,7 +308,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             } else {
                 Price price = priceList.get(i);
                 TextView v1 = new TextView(PriceActivity.this);
-                String str = String.valueOf(price.getStart_date());
+                String str = String.valueOf(price.getStart_Date());
                 v1.setText(str);
                 v1.setTextColor(Color.RED);
                 v1.setTextSize(15);
@@ -316,7 +316,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 TextView v2 = new TextView(PriceActivity.this);
                 v2.setPadding(10, 0, 0, 0);
                 v2.setTextSize(15);
-                String str1 = price.getEnd_date();
+                String str1 = price.getEnd_Date();
                 v2.setText(str1);
                 v2.setTextColor(Color.RED);
                 tr.addView(v2);
