@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private TextView info;
-    private int loginCounter = 50;
+    private int loginCounter = 5;
     private List<Account> accounts;
     private FireStore firedb;
 
