@@ -9,7 +9,7 @@ public class Price extends JsonConvertible{
     private String start_date;
 
     private String end_date;
-    private String amount;
+    private float amount;
     private boolean active;
 
     private String description;
