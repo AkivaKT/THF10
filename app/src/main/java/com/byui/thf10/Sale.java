@@ -54,7 +54,7 @@ public class Sale extends JsonConvertible {
     }
 
     /**
-     * @param quantity Describes the number of ties sold in a specific sale. 
+     * @param quantity Describes the number of ties sold in a specific sale.
      */
     public void setQuantity(String quantity) {
         this.quantity = quantity;
