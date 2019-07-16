@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Account> accounts;
     private FireStore firedb;
 
+    /**
+     * Most of what occurs in this class is for users to log-in.
+     * There is a system to pull accounts before any action occurs.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Checking to see if the correct username and passwords were input
+     * @param userName user's username
+     * @param userPassword user's password
+     */
+
     private void validate(String userName, String userPassword) {
 
         boolean userExist = true;
@@ -95,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Function to pull accounts in order to be able to validate user input for loggin in.
+     */
     public void pullAccounts(){
         firedb.pullCollection("Account", "com.byui.thf10.Account", new CallBackList() {
             @Override
