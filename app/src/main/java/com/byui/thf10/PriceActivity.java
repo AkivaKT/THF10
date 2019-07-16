@@ -122,7 +122,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void sendInfo(){
-        ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>) (Object)priceList;
+        ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)priceList;
         fireDb.storeJson(data, "Prices");
         Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
         priceList.clear();
@@ -228,22 +228,28 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             if (row == 1) {
                 // create text view and headings
                 TextView c1 = new TextView(PriceActivity.this);
-                c1.setText("Date");
+                c1.setText("Start Date");
                 c1.setTextColor(Color.BLUE);
                 c1.setTextSize(15);
                 tr.addView(c1);
                 TextView c2 = new TextView(PriceActivity.this);
                 c2.setPadding(10, 0, 0, 0);
                 c2.setTextSize(15);
-                c2.setText("content");
+                c2.setText("End Date");
                 c2.setTextColor(Color.BLUE);
                 tr.addView(c2);
                 TextView c3 = new TextView(PriceActivity.this);
                 c3.setPadding(10, 0, 0, 0);
-                c3.setText("product");
+                c3.setText("Price tag");
                 c3.setTextColor(Color.BLUE);
                 c3.setTextSize(15);
                 tr.addView(c3);
+                TextView c4 = new TextView(PriceActivity.this);
+                c4.setPadding(10, 0, 0, 0);
+                c4.setText("Description");
+                c4.setTextColor(Color.BLUE);
+                c4.setTextSize(15);
+                tr.addView(c4);
                 tv.addView(tr);
                 final View view = new View(PriceActivity.this);
                 view.setLayoutParams(new
@@ -286,8 +292,9 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
-        String[] priceString = {};
-        boolean[] checks = {};
+        final int index = priceList.size();
+        String[] priceString = new String[index];
+        final boolean[] checks = new boolean[index];
         for (int i = 0; i < priceList.size(); i++){
             Price p = priceList.get(i);
             priceString[i] = ("$ " + p.getPrice() + " " + p.getDescription());
@@ -296,18 +303,25 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                // user checked or unchecked a box
+                checks[which] = isChecked;
             }
         });
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // user clicked OK
+                int j = 0;
+                for (int i = 0; i < index; i++){
+                    if (checks[i]){
+                        priceList.remove(j);
+                    } else{
+                        j++;
+                    }
+                }
+                updateTable();
             }
         });
         builder.setNegativeButton("Cancel", null);
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }
