@@ -116,6 +116,11 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         );
     }
 
+
+    /***
+     * save information in firebase of variables and make to string so that we can use in the Android studio.
+     * Eventually, we are going to cover to Json.
+     */
     public void saveInfo() {
         String getType = type.getText().toString();
         String getSeries = series.getText().toString();
@@ -125,11 +130,11 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         String getQuantity = spinner.getSelectedItem().toString();
 
         Product product = new Product();
-
+        /// if text field is empty, toast a error message.
         if (getType == null || getType.trim().equals("") || getSeries == null || getSeries.trim().equals("") || getName == null || getName.trim().equals("") || getColor1 == null || getColor1.trim().equals("") || getColor2 == null || getColor2.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
-
+        /// if there is no error, put each input to the product list.
         else {
             product.setType(getType);
             product.setSeries(getSeries);
@@ -144,6 +149,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    /***
+     * save notification
+     */
     public void saveButtonNotification() {
         // Channel ID is arbitrary and only used on API level 26 and higher
         String channel_id = "product.saveButton.notifications.NOTIFICATION_CHANNEL";
@@ -167,6 +175,27 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
+    /***
+     * send information from application to database(firebase). If there is no data, show error message.
+     */
+    public void sendInfo(){
+        if (productList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Need to save data first then send it", Toast.LENGTH_LONG).show();
+        }
+        else {
+            ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object) productList;
+            firedb.storeJson(data, "Products");
+            productList.clear();
+            sendButtonNotification();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
+            TableLayout tv = findViewById(R.id.table);
+            tv.removeAllViewsInLayout();
+        }
+    }
+
+    /***
+     * send notification.
+     */
     public void sendButtonNotification() {
         // Channel ID is arbitrary and only used on API level 26 and higher
         String channel_id = "product.sendButton.notifications.NOTIFICATION_CHANNEL";
@@ -190,6 +219,24 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
+    /***
+     * delete selected object
+     * @param selectedItem
+     */
+    public void deleteObject(String selectedItem) {
+        if (productList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Empty data.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            showDeleteDialog();
+            updateTable();
+            deleteButtonNotification();
+        }
+    }
+
+    /***
+     * delete button notification.
+     */
     public void deleteButtonNotification() {
         // Channel ID is arbitrary and only used on API level 26 and higher
         String channel_id = "product.deleteButton.notifications.NOTIFICATION_CHANNEL";
@@ -213,32 +260,14 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
-    public void sendInfo(){
-        if (productList.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Need to save data first then send it", Toast.LENGTH_LONG).show();
-        }
-        else {
-            ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object) productList;
-            firedb.storeJson(data, "Products");
-            productList.clear();
-            sendButtonNotification();
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
-            TableLayout tv = findViewById(R.id.table);
-            tv.removeAllViewsInLayout();
-        }
-    }
 
-    public void deleteObject(String selectedItem) {
-        if (productList.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
-        }
-        else {
-            showDeleteDialog();
-            updateTable();
-            deleteButtonNotification();
-        }
-    }
-
+    /***
+     * onItemSelected function. Interface definition for a callback to be invoked when an item in this view has been selected.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -250,6 +279,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
+    /***
+     * update table. If there is any update by clicking one of buttons, update table on the product activity.
+     */
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
@@ -370,6 +402,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         }
     }
 
+    /***
+     * show delete dialog. this shows pop up and the user can select item he want.
+     */
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
