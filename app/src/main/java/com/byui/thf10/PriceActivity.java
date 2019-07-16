@@ -1,5 +1,6 @@
 package com.byui.thf10;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -120,16 +121,16 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         String descrip     = description.getText().toString();
         Price price        = new Price();
 
-        if (getNewPrice == null || getNewPrice.trim().equals(""))  {
+        if (getNewPrice.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
             LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
             Log.i(TAG, "data: " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
             price.setPrice(Float.parseFloat(getNewPrice));
-            price.setStart_date(localDate.toString());
+            price.setStart_Date(localDate.toString());
             localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
-            price.setEnd_date(localDate.toString());
+            price.setEnd_Date(localDate.toString());
             priceList.add(price);
             price.setActive(true);
             price.setDescription(descrip);
@@ -159,7 +160,6 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
             TableLayout tv = findViewById(R.id.table);
             tv.removeAllViewsInLayout();
-
         }
 
     }
@@ -265,6 +265,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
      * Table to display the prices that were entered into the Firebase.
      * Aesthetics and lines were selected to be consistent with the other tables in the app.
      */
+    @SuppressLint("SetTextI18n")
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
@@ -309,7 +310,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             } else {
                 Price price = priceList.get(i);
                 TextView v1 = new TextView(PriceActivity.this);
-                String str = String.valueOf(price.getStart_date());
+                String str = String.valueOf(price.getStart_Date());
                 v1.setText(str);
                 v1.setTextColor(Color.RED);
                 v1.setTextSize(15);
@@ -317,7 +318,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 TextView v2 = new TextView(PriceActivity.this);
                 v2.setPadding(10, 0, 0, 0);
                 v2.setTextSize(15);
-                String str1 = price.getEnd_date();
+                String str1 = price.getEnd_Date();
                 v2.setText(str1);
                 v2.setTextColor(Color.RED);
                 tr.addView(v2);
@@ -339,7 +340,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 final View view = new View(PriceActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }

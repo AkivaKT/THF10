@@ -1,6 +1,7 @@
 package com.byui.thf10;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
      * Most of what occurs in this class is for users to log-in.
      * There is a system to pull accounts before any action occurs.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
      * @param userPassword user's password
      */
 
+    @SuppressLint("SetTextI18n")
     private void validate(String userName, String userPassword) {
 
         boolean userExist = true;

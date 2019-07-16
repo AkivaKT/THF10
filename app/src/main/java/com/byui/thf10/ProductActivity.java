@@ -5,6 +5,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -45,17 +46,16 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private FireStore firedb;
     Context context;
 
-    private Button saveButton;
-    private Button sendButton;
     private Button deleteButton;
-
-
-
-
 
     private ArrayList<Product> productList = new ArrayList<>();
 
-
+    /**
+     * The inputs for this activity is a combination of a spinner and text boxes.
+     * The spinner is for the number of inventory or "quantity" that the company has in stock.
+     * The other input text boxes are there for entry of patterns and colors.
+     * The delete button is there in case of mistakes.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +67,13 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         context = this;
 
 
-
         type = findViewById(R.id.typeType);
         series = findViewById(R.id.typeSeries);
         name = findViewById(R.id.typeName);
         color1 = findViewById(R.id.typeColor1);
         color2 = findViewById(R.id.typeColor2);
-        saveButton = findViewById(R.id.SaveButton);
-        sendButton = findViewById(R.id.SendButton);
+        Button saveButton = findViewById(R.id.SaveButton);
+        Button sendButton = findViewById(R.id.SendButton);
         deleteButton = findViewById(R.id.deleteButton);
 
         spinner = findViewById(R.id.Quantity);
@@ -84,7 +83,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.quantity, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinner.setOnItemSelectedListener(this);
 
 
 
@@ -110,7 +109,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                                           @Override
                                           public void onClick(View v) {
                                               String selectedItem = spinner.getSelectedItem().toString();
-                                              deleteObject(selectedItem);
+                                              deleteObject();
                                           }
                                       }
         );
@@ -220,10 +219,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     }
 
     /***
-     * delete selected object
-     * @param selectedItem
+     * delete selected object from the popup.
      */
-    public void deleteObject(String selectedItem) {
+    public void deleteObject() {
         if (productList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
         }
@@ -263,10 +261,10 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
     /***
      * onItemSelected function. Interface definition for a callback to be invoked when an item in this view has been selected.
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
+     * @param parent    The spinner being activiated
+     * @param view      Current activity
+     * @param position  Index of the list
+     * @param id        Another index
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -282,6 +280,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     /***
      * update table. If there is any update by clicking one of buttons, update table on the product activity.
      */
+    @SuppressLint("SetTextI18n")
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
@@ -396,14 +395,16 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                 final View view = new View(ProductActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 10));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }
     }
 
     /***
-     * show delete dialog. this shows pop up and
+     * Show delete dialog. This shows pop up and will alert the user that
+     * the selected product hs been deleted form the list. This is in case of
+     * errors or mistakes entered.
      */
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

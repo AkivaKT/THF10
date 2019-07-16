@@ -23,17 +23,17 @@ public class Account extends JsonConvertible {
         return lastName;
     }
 
-    public String getUserName() {
+    String getUserName() {
         return userName;
     }
 
-    public String getPassword(){ return password;}
+    String getPassword(){ return password;}
 
-    public String getSalt() { return salt; }
+    String getSalt() { return salt; }
 
-    public String getHash() { return hash; }
+    String getHash() { return hash; }
 
-    public String getDate() { return date; }
+    private String getDate() { return date; }
 
     // setters
 
@@ -76,9 +76,7 @@ public class Account extends JsonConvertible {
     public boolean checkPassword (String password){
         setPassword(password);
         try {
-            if (Encryption.verifyPassword(this)){
-                return true;}
-            else{return false;}
+            return Encryption.verifyPassword(this);
         } catch (Exception e) {
             Log.e(TAG,"problem check password");
             return false;

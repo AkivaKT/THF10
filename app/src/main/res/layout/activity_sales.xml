@@ -8,38 +8,35 @@
 
     <Spinner
         android:id="@+id/Product"
-        android:layout_width="393dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="79dp"
-        app:layout_constraintBottom_toTopOf="@+id/Price"
-        app:layout_constraintEnd_toStartOf="@+id/Price"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
+        android:layout_width="188dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Price" />
 
     <Spinner
         android:id="@+id/Account"
-        android:layout_width="160dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="177dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="120dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="79dp"
         app:layout_constraintBottom_toTopOf="@+id/Price"
+        app:layout_constraintEnd_toStartOf="@+id/Product"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.115" />
 
     <Spinner
         android:id="@+id/Price"
-        android:layout_width="160dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="388dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.936"
+        app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,10 +52,10 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.415" />
+        app:layout_constraintVertical_bias="0.305" />
 
     <Button
         android:id="@+id/SaveButton"
@@ -74,6 +71,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/table"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -89,7 +87,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/table" />
+        app:layout_constraintTop_toBottomOf="@+id/table"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -104,16 +103,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/table" />
+        app:layout_constraintTop_toBottomOf="@+id/table"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TableLayout
         android:id="@+id/table"
         android:layout_width="381dp"
         android:layout_height="316dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Quantity" />
+
+    <Spinner
+        android:id="@+id/Day"
+        android:layout_width="113dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="536dp"
+        android:layout_x="147dp"
+        android:layout_y="309dp"
+        android:ems="10"
+        android:hint="@string/day"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Month"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/Year"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="16dp"
+        android:layout_x="279dp"
+        android:layout_y="307dp"
+        android:ems="10"
+        android:entries="@array/Year"
+        android:inputType="date"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/Month"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="16dp"
+        android:layout_x="20dp"
+        android:layout_y="309dp"
+        android:ems="10"
+        android:entries="@array/Month"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/Year"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

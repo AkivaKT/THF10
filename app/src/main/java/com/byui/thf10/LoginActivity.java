@@ -1,5 +1,6 @@
 package com.byui.thf10;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -129,8 +130,8 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Said table to display the sales.
      */
+    @SuppressLint("SetTextI18n")
     private void makeTable() {
-
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
         int row = 1;
@@ -141,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // this will be executed once
             if (row == 1) {
-                // create textview and headings
+                // create text view and headings
                 TextView c1 = new TextView(LoginActivity.this);
                 c1.setText("Date");
                 c1.setTextColor(Color.BLUE);
@@ -150,19 +151,30 @@ public class LoginActivity extends AppCompatActivity {
                 TextView c2 = new TextView(LoginActivity.this);
                 c2.setPadding(10, 0, 0, 0);
                 c2.setTextSize(15);
-                c2.setText("content");
+                c2.setText("Product");
                 c2.setTextColor(Color.BLUE);
                 tr.addView(c2);
                 TextView c3 = new TextView(LoginActivity.this);
-                c3.setPadding(10, 0, 0, 0);
-                c3.setText("product");
+                c3.setPadding(15, 0, 0, 0);
+                c3.setText("Quantity");
                 c3.setTextColor(Color.BLUE);
                 c3.setTextSize(15);
                 tr.addView(c3);
+                TextView c4 = new TextView(LoginActivity.this);
+                c4.setPadding(15, 0, 0, 0);
+                c4.setText("Amount");
+                c4.setTextColor(Color.BLUE);
+                c4.setTextSize(15);
+                tr.addView(c4);
+                TextView c5 = new TextView(LoginActivity.this);
+                c5.setPadding(15, 0, 0, 0);
+                c5.setText("Sale");
+                c5.setTextColor(Color.BLUE);
+                c5.setTextSize(15);
+                tr.addView(c5);
                 tv.addView(tr);
                 final View view = new View(LoginActivity.this);
-                view.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
+                view.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
                 view.setBackgroundColor(Color.BLUE);
                 tv.addView(view); // add line below heading
                 row = 0;
@@ -177,22 +189,36 @@ public class LoginActivity extends AppCompatActivity {
                 TextView v2 = new TextView(LoginActivity.this);
                 v2.setPadding(10, 0, 0, 0);
                 v2.setTextSize(15);
-                String str1 = sale.getQuantity();
+                String str1 = sale.getProduct().getName();
                 v2.setText(str1);
                 v2.setTextColor(Color.RED);
                 tr.addView(v2);
                 TextView v3 = new TextView(LoginActivity.this);
-                v3.setPadding(10, 0, 0, 0);
-                String str2 = sale.getQuantity();
+                v3.setPadding(15, 0, 0, 0);
+                String str2 = String.valueOf(sale.getQuantity());
                 v3.setText(str2);
                 v3.setTextColor(Color.RED);
                 v3.setTextSize(15);
                 tr.addView(v3);
+                TextView v4 = new TextView(LoginActivity.this);
+                v4.setPadding(15, 0, 0, 0);
+                String str4 = "$" + (sale.getPrice().getPrice() * Integer.parseInt(sale.getQuantity()));
+                v4.setText(str4);
+                v4.setTextColor(Color.RED);
+                v4.setTextSize(15);
+                tr.addView(v4);
+                TextView v5 = new TextView(LoginActivity.this);
+                v5.setPadding(15, 0, 0, 0);
+                String str5 = sale.getAccount();
+                v5.setText(str5);
+                v5.setTextColor(Color.RED);
+                v5.setTextSize(15);
+                tr.addView(v5);
                 tv.addView(tr);
                 final View view = new View(LoginActivity.this);
                 view.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.BLACK);
                 tv.addView(view);  // add line below each row
             }
         }
