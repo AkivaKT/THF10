@@ -28,6 +28,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private Spinner PriceSpinner;
     private Spinner ProductSpinner;
+    private Spinner AccountSpinner;
     private EditText Quantity;
     private FireStore firedb;
     private ArrayList<JsonConvertible> salesList = new ArrayList<>();
@@ -37,6 +38,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     private List<Product> ProductList;
     private List<Price> PriceList;
     private List<String> ProductType;
+    private List<String> PriceType;
 
     public SalesActivity() {
     }
@@ -51,9 +53,10 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         ProductList = new ArrayList<>();
         PriceList = new ArrayList<>();
         ProductType = new ArrayList<String>();
+        PriceType = new ArrayList<String>();
 
         pullProducts();
-        //pullPrices();
+        pullPrices();
 
         // Product Spinner
         ProductSpinner = findViewById(R.id.Product);
@@ -63,14 +66,22 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         PriceSpinner = findViewById(R.id.Price);
         PriceSpinner.setOnItemSelectedListener(this);
 
-        List<String> PriceType = new ArrayList<String>();
-        //populatePrice(PriceType);
+        // Account Spinner
+        AccountSpinner = findViewById(R.id.Account);
+        AccountSpinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter<String> PriceAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, PriceType);
-        PriceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        PriceSpinner.setAdapter(PriceAdapter);
-        PriceSpinner.setOnItemSelectedListener(this);
+        List<String> AccountType = new ArrayList<String>();
+        AccountType.add("Keith");
+        AccountType.add("Josh");
+        AccountType.add("Louis");
+
+        ArrayAdapter<String> AccountAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, AccountType);
+
+        AccountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        AccountSpinner.setAdapter(AccountAdapter);
+        AccountSpinner.setOnItemSelectedListener(this);
+
 
         // Quantity Entry box
         Quantity = findViewById(R.id.Quantity);
@@ -147,12 +158,11 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onCallback(List<Object> jsonList) {
                 for (Object i : jsonList) {
-                    //Price pric = new Price();
-                    //PriceList.add((pric.getDescription()) i);
-                    //PriceList.add((pric.getPrice()) i);
+                    PriceList.add((Price) i);
                     Log.d(TAG, "Prices loaded.");
                 }
                 Toast.makeText(getApplicationContext(), "Prices List Loaded", Toast.LENGTH_SHORT).show();
+                populatePrice();
             }
         });
     }
@@ -176,10 +186,18 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
-    private void populatePrice(List<String> PriceType){
+    private void populatePrice(){
         for (Price i : PriceList){
-            PriceType.add(i.getDescription());
-            PriceType.add(String.valueOf(i.getPrice()));
+            String desc = i.getDescription();
+            String pric = String.valueOf(i.getPrice());
+
+            PriceType.add(desc + " " + pric);
+
+            ArrayAdapter<String> PriceAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, PriceType);
+            PriceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            PriceSpinner.setAdapter(PriceAdapter);
+            PriceSpinner.setOnItemSelectedListener(this);
         }
     }
 
