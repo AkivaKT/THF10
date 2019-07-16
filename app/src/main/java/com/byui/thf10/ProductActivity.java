@@ -190,6 +190,29 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
+    public void deleteButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "product.deleteButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Delete data from database.")
+                .setContentText("Just delete selected item.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
     public void sendInfo(){
         if (productList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Need to save data first then send it", Toast.LENGTH_LONG).show();
@@ -206,8 +229,14 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void deleteObject(String selectedItem) {
-        showDeleteDialog();
-        updateTable();
+        if (productList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
+        }
+        else {
+            showDeleteDialog();
+            updateTable();
+            deleteButtonNotification();
+        }
     }
 
     @Override
@@ -344,32 +373,37 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
-        String[] priceString = new String[productList.size()];
-        final boolean[] checks = new boolean[productList.size()];
+        final int index = productList.size();
+        String[] priceString = new String[index];
+        final boolean[] checks = new boolean[index];
         for (int i = 0; i < productList.size(); i++){
             Product pro = productList.get(i);
             priceString[i] = ("$ " + pro.getName() + " " + pro.getSeries() + " " + pro.getType() + " " + pro.getColor1() + " " + pro.getColor2() + " " + pro.getQuantity());
             checks[i] = false;
-            Log.d(TAG, "sdd load");
         }
         builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checks[which] = isChecked;
-                Log.d(TAG, "sdd" + which);
             }
         });
 
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d(TAG, "sdd" + which);
+                int j = 0;
+                for (int i = 0; i < index; i++){
+                    if (checks[i]){
+                        productList.remove(j);
+                    } else{
+                        j++;
+                    }
+                }
+                updateTable();
             }
         });
         builder.setNegativeButton("Cancel", null);
-        Log.d(TAG, "sddd");
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 }
