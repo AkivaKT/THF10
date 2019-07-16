@@ -92,16 +92,25 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         });
     }
 
+    /**
+     * Save price data (1)
+     * <p>
+     * Activated by the saveButton, to take data from the spinners and edittexts to for (2)
+     * an array list of (@Price) saved in PriceList, This data will be display in the
+     * Table view on the same activity.
+     * </p>
+     * @author Keith Tung
+     */
     public void saveInfo() {
         String getNewPrice = newPrice.getText().toString();
-        String sYear = startYearSpinner.getSelectedItem().toString();
-        int sMonth = startMonthSpinner.getSelectedItemPosition();
-        String sDay = startDaySpinner.getSelectedItem().toString();
-        String eYear = endYearSpinner.getSelectedItem().toString();
-        int eMonth = endMonthSpinner.getSelectedItemPosition();
-        String eDay = endDaySpinner.getSelectedItem().toString();
-        String descrip = description.getText().toString();
-        Price price = new Price();
+        String sYear       = startYearSpinner.getSelectedItem().toString();
+        int sMonth         = startMonthSpinner.getSelectedItemPosition();
+        String sDay        = startDaySpinner.getSelectedItem().toString();
+        String eYear       = endYearSpinner.getSelectedItem().toString();
+        int eMonth         = endMonthSpinner.getSelectedItemPosition();
+        String eDay        = endDaySpinner.getSelectedItem().toString();
+        String descrip     = description.getText().toString();
+        Price price        = new Price();
 
         if (getNewPrice == null || getNewPrice.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
@@ -121,6 +130,14 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * Send price data (1)
+     * <p>
+     * Activated by the sendButton, to take the Price from PriceList and send it to firebase, (2)
+     * it will clear PriceList and the Table view will be renewed/emptied.
+     * </p>
+     * @author Keith Tung
+     */
     public void sendInfo(){
         ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)priceList;
         fireDb.storeJson(data, "Prices");
@@ -131,6 +148,15 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         tv.removeAllViewsInLayout();
     }
 
+    /**
+     * Save price data (1)
+     * <p>
+     * Activated by the saveButton, to take data from the spinners and edittexts to for (2)
+     * an array list of (@Price) saved in PriceList, This data will be display in the
+     * Table view on the same activity.
+     * </p>
+     * @author Keith Tung
+     */
     public void setupSpinner(){
         startMonthSpinner = findViewById(R.id.sMonth);
         startMonthSpinner.setOnItemSelectedListener(this);
@@ -239,21 +265,20 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 c2.setTextColor(Color.BLUE);
                 tr.addView(c2);
                 TextView c3 = new TextView(PriceActivity.this);
-                c3.setPadding(10, 0, 0, 0);
+                c3.setPadding(15, 0, 0, 0);
                 c3.setText("Price tag");
                 c3.setTextColor(Color.BLUE);
                 c3.setTextSize(15);
                 tr.addView(c3);
                 TextView c4 = new TextView(PriceActivity.this);
-                c4.setPadding(10, 0, 0, 0);
+                c4.setPadding(15, 0, 0, 0);
                 c4.setText("Description");
                 c4.setTextColor(Color.BLUE);
                 c4.setTextSize(15);
                 tr.addView(c4);
                 tv.addView(tr);
                 final View view = new View(PriceActivity.this);
-                view.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
+                view.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 2));
                 view.setBackgroundColor(Color.BLUE);
                 tv.addView(view); // add line below heading
                 row = 0;
@@ -273,12 +298,19 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 v2.setTextColor(Color.RED);
                 tr.addView(v2);
                 TextView v3 = new TextView(PriceActivity.this);
-                v3.setPadding(10, 0, 0, 0);
-                String str2 = price.getDescription();
+                v3.setPadding(15, 0, 0, 0);
+                String str2 = String.valueOf(price.getPrice());
                 v3.setText(str2);
                 v3.setTextColor(Color.RED);
                 v3.setTextSize(15);
                 tr.addView(v3);
+                TextView v4 = new TextView(PriceActivity.this);
+                v4.setPadding(15, 0, 0, 0);
+                String str4 = price.getDescription();
+                v4.setText(str2);
+                v4.setTextColor(Color.RED);
+                v4.setTextSize(15);
+                tr.addView(v4);
                 tv.addView(tr);
                 final View view = new View(PriceActivity.this);
                 view.setLayoutParams(new
