@@ -3,9 +3,14 @@ package com.byui.thf10;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +25,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -37,6 +43,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private Spinner spinner;
 
     private FireStore firedb;
+    Context context;
 
     private Button saveButton;
     private Button sendButton;
@@ -57,6 +64,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         // CONNECTION WITH DATABASE
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
+        context = this;
 
 
 
@@ -188,14 +196,18 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         }
         else {
             ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object) productList;
+            firedb.storeJson(data, "Products");
             productList.clear();
             sendButtonNotification();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
+            TableLayout tv = findViewById(R.id.table);
+            tv.removeAllViewsInLayout();
         }
     }
 
     public void deleteObject(String selectedItem) {
-        productList.remove(selectedItem);
-        /// (BaseAdapter)productList).notifyDataSetChanged();
+        showDeleteDialog();
+        updateTable();
     }
 
     @Override
@@ -327,5 +339,37 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                 tv.addView(view);  // add line below each row
             }
         }
+    }
+
+    private void showDeleteDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select the price to delete:");
+        String[] priceString = new String[productList.size()];
+        final boolean[] checks = new boolean[productList.size()];
+        for (int i = 0; i < productList.size(); i++){
+            Product pro = productList.get(i);
+            priceString[i] = ("$ " + pro.getName() + " " + pro.getSeries() + " " + pro.getType() + " " + pro.getColor1() + " " + pro.getColor2() + " " + pro.getQuantity());
+            checks[i] = false;
+            Log.d(TAG, "sdd load");
+        }
+        builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                checks[which] = isChecked;
+                Log.d(TAG, "sdd" + which);
+            }
+        });
+
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG, "sdd" + which);
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        Log.d(TAG, "sddd");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 }
