@@ -4,10 +4,14 @@ import androidx.annotation.Nullable;
 
 
 public class Price extends JsonConvertible{
+
+    //member variables
     private String start_date;
+
     private String end_date;
-    private String amount;
+    private float amount;
     private boolean active;
+
     private String description;
 
     // getters
@@ -18,7 +22,7 @@ public class Price extends JsonConvertible{
 
     public boolean getActive(){return this.active;}
 
-    public String getPrice(){return amount;}
+    public float getPrice(){return amount;}
 
     public String getDescription() { return description; }
 
@@ -30,7 +34,7 @@ public class Price extends JsonConvertible{
 
     public void setDescription(String description) { this.description = description; }
 
-    public void setAmount(String amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
