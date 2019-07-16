@@ -159,7 +159,6 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
             TableLayout tv = findViewById(R.id.table);
             tv.removeAllViewsInLayout();
-
         }
 
     }
