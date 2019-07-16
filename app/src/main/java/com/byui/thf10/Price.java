@@ -8,7 +8,7 @@ public class Price extends JsonConvertible{
     //member variables
     private String start_date;
     private String end_date;
-    private float amount;
+    private float price;
     private boolean active;
     private String description;
 
@@ -20,7 +20,7 @@ public class Price extends JsonConvertible{
 
     public boolean getActive(){return this.active;}
 
-    public float getPrice(){return amount;}
+    public float getPrice(){return price;}
 
     public String getDescription() { return description; }
 
@@ -38,8 +38,8 @@ public class Price extends JsonConvertible{
      */
     public void setDescription(String description) { this.description = description; }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setPrice(float amount) {
+        this.price = amount;
     }
 
     /**

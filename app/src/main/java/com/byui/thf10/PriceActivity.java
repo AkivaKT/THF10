@@ -126,7 +126,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         else {
             LocalDate localDate = LocalDate.of(Integer.parseInt(sYear), sMonth + 1, Integer.parseInt(sDay));
             Log.i(TAG, "data: " + Integer.parseInt(sYear) + sMonth + Integer.parseInt(sDay) );
-            //price.setAmount(Float.parseFloat(getNewPrice));
+            price.setPrice(Float.parseFloat(getNewPrice));
             price.setStart_date(localDate.toString());
             localDate = LocalDate.of(Integer.parseInt(eYear), eMonth + 1, Integer.parseInt(eDay));
             price.setEnd_date(localDate.toString());
@@ -323,7 +323,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
                 TextView v4 = new TextView(PriceActivity.this);
                 v4.setPadding(15, 0, 0, 0);
                 String str4 = price.getDescription();
-                v4.setText(str2);
+                v4.setText(str4);
                 v4.setTextColor(Color.RED);
                 v4.setTextSize(15);
                 tr.addView(v4);

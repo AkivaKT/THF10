@@ -39,6 +39,9 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     private List<Price> PriceList;
     private List<String> ProductType;
     private List<String> PriceType;
+    private Product product;
+    private Price price;
+    private String account;
 
     public SalesActivity() {
     }
@@ -82,7 +85,6 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         AccountSpinner.setAdapter(AccountAdapter);
         AccountSpinner.setOnItemSelectedListener(this);
 
-
         // Quantity Entry box
         Quantity = findViewById(R.id.Quantity);
 
@@ -109,18 +111,17 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void saveInfo() {
         String getQuantity = Quantity.getText().toString();
-        String getPrice = PriceSpinner.getSelectedItem().toString();
-        String getProduct = ProductSpinner.getSelectedItem().toString();
 
         Sale sale = new Sale();
 
-        if (getQuantity == null || getQuantity.trim().equals("") || getProduct == null || getProduct.trim().equals("") || getPrice == null || getPrice.trim().equals(""))  {
+        if (getQuantity == null || getQuantity.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
             sale.setQuantity(getQuantity);
-            sale.setPrice(getPrice);
-            sale.setProduct(getProduct);
+            sale.setPrice(price);
+            sale.setProduct(product);
+            sale.setAccount(account);
             salesList.add(sale);
             Log.i(TAG, "sdd Sale created.");
         }
@@ -129,9 +130,16 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+        if (parent.getId() == R.id.Price){
+            price = PriceList.get(position);
+        } else if (parent.getId() == R.id.Product){
+            product = ProductList.get(position);
+        } else if (parent.getId() == R.id.Account){
+            account = text;
+        }
     }
 
     public void sendInfo(){
@@ -189,7 +197,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     private void populatePrice(){
         for (Price i : PriceList){
             String desc = i.getDescription();
-            String pric = String.valueOf(i.getPrice());
+            float pric = i.getPrice();
 
             PriceType.add(desc + " " + pric);
 
