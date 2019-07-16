@@ -172,8 +172,8 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void populateProducts(List<String> ProductType){
         for (Product i : ProductList){
-            String pattern = i.getPattern();
-            ProductType.add(pattern);
+            String name = i.getName();
+            ProductType.add(name);
             ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, ProductType);
 

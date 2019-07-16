@@ -1,10 +1,13 @@
 package com.byui.thf10;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +21,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -72,6 +77,9 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 saveInfo();
+                if (!priceList.isEmpty()) {
+                    saveButtonNotification();
+                }
                 }
             }
         );
@@ -121,14 +129,22 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
-    public void sendInfo(){
-        ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)priceList;
-        fireDb.storeJson(data, "Prices");
-        Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
-        priceList.clear();
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
-        TableLayout tv = findViewById(R.id.table);
-        tv.removeAllViewsInLayout();
+    public void sendInfo() {
+        if (priceList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Need to save data first then send it", Toast.LENGTH_LONG).show();
+        }
+        else {
+            ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)priceList;
+            fireDb.storeJson(data, "Prices");
+            Toast.makeText(this ,"Total of " + priceList.size() + " items saved.", Toast.LENGTH_SHORT).show();
+            priceList.clear();
+            sendButtonNotification();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
+            TableLayout tv = findViewById(R.id.table);
+            tv.removeAllViewsInLayout();
+
+        }
+
     }
 
     public void setupSpinner(){
@@ -289,9 +305,10 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
-    private void showDeleteDialog(){
+    private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
+        deleteButtonNotification();
         final int index = priceList.size();
         String[] priceString = new String[index];
         final boolean[] checks = new boolean[index];
@@ -310,19 +327,98 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int j = 0;
-                for (int i = 0; i < index; i++){
-                    if (checks[i]){
-                        priceList.remove(j);
-                    } else{
-                        j++;
-                    }
+                if (priceList.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
                 }
-                updateTable();
+                else {
+                    int j = 0;
+                    for (int i = 0; i < index; i++) {
+                        if (checks[i]){
+                            priceList.remove(j);
+                        } else{
+                            j++;
+                        }
+                    }
+                    updateTable();
+                }
             }
         });
         builder.setNegativeButton("Cancel", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    /***
+     * save notification
+     */
+    public void saveButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "price.saveButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Saved data to database.")
+                .setContentText("Just sent a price data.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
+    /***
+     * send notification.
+     */
+    public void sendButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "price.sendButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Send data to database.")
+                .setContentText("Just sent a price data.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
+    }
+
+    public void deleteButtonNotification() {
+        // Channel ID is arbitrary and only used on API level 26 and higher
+        String channel_id = "price.deleteButton.notifications.NOTIFICATION_CHANNEL";
+
+        // NotificationChannel must be used for API level 26 and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channel_id,
+                    channel_id, NotificationManager.IMPORTANCE_HIGH);  // Decided to have channel id and name the same
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Check item you want to delete.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+
+        notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 }
