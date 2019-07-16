@@ -17,13 +17,13 @@ public class Sale extends JsonConvertible {
 
     //getters
 
-    public Price getPrice(){ return price; }
-    public String getAccount(){ return account; }
-    public Product getProduct(){ return product; }
-    public String getDate() {
+    Price getPrice(){ return price; }
+    String getAccount(){ return account; }
+    Product getProduct(){ return product; }
+    String getDate() {
         return date;
     }
-    public String getQuantity() {
+    String getQuantity() {
         return quantity;
     }
 

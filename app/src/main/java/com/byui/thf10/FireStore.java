@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -24,7 +25,7 @@ public class FireStore {
 
     private final FirebaseFirestore db;
 
-    public FireStore(FirebaseFirestore db) {
+    FireStore(FirebaseFirestore db) {
         this.db = db;
     }
 
@@ -75,7 +76,7 @@ public class FireStore {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<Object> list = new ArrayList<>();
-                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                            for (QueryDocumentSnapshot doc : Objects.requireNonNull(task.getResult())) {
                                 try {
                                     Object obj = doc.toObject(Class.forName(c));
                                     list.add(obj);
