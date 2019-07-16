@@ -68,7 +68,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-        type = findViewById(R.id.NewPrice);
+        type = findViewById(R.id.typeType);
         series = findViewById(R.id.typeSeries);
         name = findViewById(R.id.typeName);
         color1 = findViewById(R.id.typeColor1);
@@ -225,7 +225,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
      */
     public void deleteObject(String selectedItem) {
         if (productList.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Empty data.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
         }
         else {
             showDeleteDialog();
@@ -403,20 +403,20 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     }
 
     /***
-     * show delete dialog. this shows pop up and the user can select item he want.
+     * show delete dialog. this shows pop up and
      */
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Select the price to delete:");
+        builder.setTitle("Select the product to delete:");
         final int index = productList.size();
-        String[] priceString = new String[index];
+        String[] productString = new String[index];
         final boolean[] checks = new boolean[index];
         for (int i = 0; i < productList.size(); i++){
             Product pro = productList.get(i);
-            priceString[i] = ("$ " + pro.getName() + " " + pro.getSeries() + " " + pro.getType() + " " + pro.getColor1() + " " + pro.getColor2() + " " + pro.getQuantity());
+            productString[i] = (pro.getName());
             checks[i] = false;
         }
-        builder.setMultiChoiceItems(priceString, checks, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(productString, checks, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 checks[which] = isChecked;
