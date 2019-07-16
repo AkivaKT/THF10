@@ -73,7 +73,7 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         List<String> AccountType = new ArrayList<String>();
         AccountType.add("Keith");
         AccountType.add("Josh");
-        AccountType.add("Louis"); 
+        AccountType.add("Louis");
 
         ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, AccountType);
