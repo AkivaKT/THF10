@@ -211,6 +211,10 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         endDaySpinner.setAdapter(lAdapter);
     }
 
+    /**
+     * Purpose is to check the Array and decide how many days are in each month.
+     * The spinner had complexity in this aspect.
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
@@ -257,6 +261,10 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    /**
+     * Table to display the prices that were entered into the Firebase.
+     * Aesthetics and lines were selected to be consistent with the other tables in the app.
+     */
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
@@ -337,6 +345,12 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * The purpose of this function is to create the pop-up table of the prices in the table.
+     * There will be the ability to select one or many prices. The prices that are selected
+     * will be deleted when the delete button is activated. There was in issue with the indexing
+     * of the selected item that needed to be addressed.
+     */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the price to delete:");
@@ -432,6 +446,9 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
+    /**
+     * delete notification
+     */
     public void deleteButtonNotification() {
         // Channel ID is arbitrary and only used on API level 26 and higher
         String channel_id = "price.deleteButton.notifications.NOTIFICATION_CHANNEL";
