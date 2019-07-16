@@ -75,12 +75,12 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         AccountType.add("Josh");
         AccountType.add("Louis");
 
-        ArrayAdapter<String> ProductAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> AccountAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, AccountType);
 
-        ProductAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ProductSpinner.setAdapter(ProductAdapter);
-        ProductSpinner.setOnItemSelectedListener(this);
+        AccountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        AccountSpinner.setAdapter(ProductAdapter);
+        AccountSpinner.setOnItemSelectedListener(this);
 
 
         // Quantity Entry box
