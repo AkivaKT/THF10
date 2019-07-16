@@ -2,21 +2,15 @@ package com.byui.thf10;
 
 
 public class Product extends JsonConvertible {
-    private int product_id;
     private String type;
     private String series;
-    private String Pattern;
+    private String name;
     private String color1;
     private String color2;
-    private int quantity;
+    private String quantity;
 
-    public int getProduct_id() {
-        return product_id;
-    }
 
-    public int getQuantity() {
-        return quantity;
-    }
+    public String getQuantity() { return quantity; }
 
     public String getColor1() {
         return color1;
@@ -26,9 +20,7 @@ public class Product extends JsonConvertible {
         return color2;
     }
 
-    public String getPattern() {
-        return Pattern;
-    }
+    public String getName() { return name; }
 
     public String getSeries() {
         return series;
@@ -46,15 +38,11 @@ public class Product extends JsonConvertible {
         this.color2 = color2;
     }
 
-    public void setPattern(String pattern) {
-        Pattern = pattern;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
-
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
