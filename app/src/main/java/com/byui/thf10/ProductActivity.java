@@ -57,7 +57,6 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
      * The other input text boxes are there for entry of patterns and colors.
      * The delete button is there in case of mistakes.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +84,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.quantity, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinner.setOnItemSelectedListener(this);
 
 
 
@@ -111,7 +110,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
                                           @Override
                                           public void onClick(View v) {
                                               String selectedItem = spinner.getSelectedItem().toString();
-                                              deleteObject(selectedItem);
+                                              deleteObject();
                                           }
                                       }
         );
@@ -221,10 +220,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     }
 
     /***
-     * delete selected object
-     * @param selectedItem
+     * delete selected object from the popup.
      */
-    public void deleteObject(String selectedItem) {
+    public void deleteObject() {
         if (productList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Empty data", Toast.LENGTH_LONG).show();
         }
@@ -264,10 +262,10 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
 
     /***
      * onItemSelected function. Interface definition for a callback to be invoked when an item in this view has been selected.
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
+     * @param parent    The spinner being activiated
+     * @param view      Current activity
+     * @param position  Index of the list
+     * @param id        Another index
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -38,7 +38,6 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private Spinner PriceSpinner;
     private Spinner ProductSpinner;
-    private Spinner AccountSpinner;
     private EditText Quantity;
     private FireStore firedb;
     private ArrayList<Sale> salesList = new ArrayList<>();
@@ -71,8 +70,8 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         firedb = new FireStore(db);
         ProductList = new ArrayList<>();
         PriceList = new ArrayList<>();
-        ProductType = new ArrayList<String>();
-        PriceType = new ArrayList<String>();
+        ProductType = new ArrayList<>();
+        PriceType = new ArrayList<>();
 
         pullProducts();
         pullPrices();
@@ -86,15 +85,17 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         PriceSpinner.setOnItemSelectedListener(this);
 
         // Account Spinner
+        Spinner AccountSpinner;
         AccountSpinner = findViewById(R.id.Account);
         AccountSpinner.setOnItemSelectedListener(this);
 
-        List<String> AccountType = new ArrayList<String>();
+        // Adapters
+        List<String> AccountType = new ArrayList<>();
         AccountType.add("Keith");
         AccountType.add("Josh");
         AccountType.add("Louis");
 
-        ArrayAdapter<String> AccountAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> AccountAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, AccountType);
 
         AccountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -166,6 +167,15 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+    /**
+     * Save price data (1)
+     * <p>
+     * Activated by the saveButton, to take data from the spinners and edittexts to for (2)
+     * an array list of (@Sale) saved in SalesList, This data will be display in the
+     * Table view on the same activity.
+     * </p>
+     * @author Keith Tung
+     */
     public void saveInfo() {
         String getQuantity = Quantity.getText().toString();
         Sale sale          = new Sale();
@@ -190,6 +200,11 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         updateTable();
     }
 
+    /**
+     * The purpose of this function is to check the Array and decide how many days are in each month.
+     * The spinner will change according to user's selection. It also serves to record the selected
+     * Price and product from the spinners.
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
@@ -222,6 +237,14 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * Send sale data (1)
+     * <p>
+     * Activated by the sendButton, to take the sale from salesList and send it to firebase, (2)
+     * it will clear salesList and the Table view will be renewed/emptied.
+     * </p>
+     * @author Keith Tung
+     */
     public void sendInfo(){
         ArrayList<JsonConvertible> data = (ArrayList<JsonConvertible>)(Object)salesList;
         firedb.storeJson(data, "Sales");
@@ -232,6 +255,10 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("Table needs renewal"));
     }
 
+
+    /**
+     * pulling data from firebase (collection Product)
+     */
     public void pullProducts(){
         firedb.pullCollection("Products", "com.byui.thf10.Product", new CallBackList() {
             @Override
@@ -246,6 +273,9 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         });
     }
 
+    /**
+     * pulling data from firebase (collection Prices)
+     */
     public void pullPrices(){
         firedb.pullCollection("Prices", "com.byui.thf10.Price", new CallBackList() {
             @Override
@@ -265,6 +295,11 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
 
     }
 
+
+    /**
+     * This function takes the list of product and create a array of string representing the data,
+     * This array will then be used in the spinner for Product
+     */
     private void populateProducts(){
         for (Product i : ProductList){
             Log.d(TAG, "product is converted.");
@@ -279,12 +314,15 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * This function takes the list of prices and create a array of string representing the data,
+     * This array will then be used in the spinner for Prices
+     */
     private void populatePrice(){
         for (Price i : PriceList){
             String desc = i.getDescription();
-            float pric = i.getPrice();
-
-            PriceType.add(desc + " " + pric);
+            float price = i.getPrice();
+            PriceType.add(desc + " " + price);
 
             ArrayAdapter<String> PriceAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, PriceType);
@@ -294,6 +332,10 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * Create a Table on the salesActivity Page listing the unsent sales are
+     * that currently in the saleList.
+     */
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
@@ -388,7 +430,8 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     /***
-     * send notification.
+     * send notification. (1)
+     * activated when send button is pressed.
      */
     public void sendButtonNotification() {
         // Channel ID is arbitrary and only used on API level 26 and higher
@@ -413,6 +456,12 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         notificationManagerCompat.notify(0, mBuilder.build()); // 0 was arbitrary
     }
 
+    /**
+     * The purpose of this function is to create the pop-up table of the sales in the table.
+     * There will be the ability to select one or many prices. The sales that are selected
+     * will be deleted when the delete button is activated. There was in issue with the indexing
+     * of the selected item that needed to be addressed.
+     */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select the sale to delete:");
