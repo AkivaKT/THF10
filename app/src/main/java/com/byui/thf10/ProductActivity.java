@@ -49,12 +49,14 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private Button sendButton;
     private Button deleteButton;
 
-
-
-
-
     private ArrayList<Product> productList = new ArrayList<>();
 
+    /**
+     * The inputs for this activity is a combination of a spinner and text boxes.
+     * The spinner is for the number of inventory or "quantity" that the company has in stock.
+     * The other input text boxes are there for entry of patterns and colors.
+     * The delete button is there in case of mistakes.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         firedb = new FireStore(db);
         context = this;
-
 
 
         type = findViewById(R.id.typeType);
@@ -403,7 +404,9 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     }
 
     /***
-     * show delete dialog. this shows pop up and
+     * Show delete dialog. This shows pop up and will alert the user that
+     * the selected product hs been deleted form the list. This is in case of
+     * errors or mistakes entered.
      */
     private void showDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
