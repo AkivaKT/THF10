@@ -32,6 +32,11 @@ public class LoginActivity extends AppCompatActivity {
     private BroadcastReceiver tableRenew;
 
 
+    /**
+     * This is the intial page that users are lead to after they log-in.
+     * They are presented three buttons to navigate the app. The decision
+     * Is whether or not they should add or delete a new sale, product or price.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(tableRenew, new IntentFilter("Table needs renewal"));
     }
 
+    /**
+     * Button for Product, Price and Sales pages.
+     */
     public void productActivity(){
         Intent productIntent = new Intent(this, ProductActivity.class);
         startActivity(productIntent);
@@ -98,6 +106,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent3);
     }
 
+    /**
+     * Sales data is pulled initially so that it can populate the table.
+     * As sales are the values with the most input, the table will display all the recent
+     * sales that have been made across the company.
+     */
     public void pullData(){
         sales = new ArrayList<>();
         firedb.pullCollection("Sales", "com.byui.thf10.Sale", new CallBackList() {
@@ -113,6 +126,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Said table to display the sales.
+     */
     private void makeTable() {
 
         TableLayout tv = findViewById(R.id.table);

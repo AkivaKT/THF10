@@ -35,6 +35,11 @@ public class FireStore {
         db.setFirestoreSettings(settings);
     }
 
+    /**
+     * Purpose is to push data into the cloud. This could have been created into an interface
+     * and perhaps may have been more efficient that way.
+     * @param list Is the JsonCovertibles that are sent to the Firebase.
+     */
 
     public void storeJson(List<JsonConvertible> list, String collection) {
 
@@ -56,6 +61,11 @@ public class FireStore {
                     });
         }
     }
+
+    /**
+     * Purpose of this is to pull data from specific collections in the firebase API.
+     * @param collection The selected collection in the firebase that shoudl be pulled from.
+     */
 
     public void pullCollection(final String collection, final String c, final CallBackList callBackList) {
         CollectionReference collectionReference = db.collection(collection);
