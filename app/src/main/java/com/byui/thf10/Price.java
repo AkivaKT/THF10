@@ -14,15 +14,16 @@ public class Price extends JsonConvertible{
 
     // getters
 
-    public String getEnd_Date(){ return end_Date; }
+    String getEnd_Date(){ return end_Date; }
 
-    public String getStart_Date(){return start_Date;}
+    String getStart_Date(){return start_Date;}
 
+    // Active is a feature that is not being used yet.
     public boolean getActive(){return this.active;}
 
-    public float getPrice(){return price;}
+    float getPrice(){return price;}
 
-    public String getDescription() { return description; }
+    String getDescription() { return description; }
 
     // setters
 

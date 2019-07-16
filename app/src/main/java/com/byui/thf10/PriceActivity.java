@@ -1,5 +1,6 @@
 package com.byui.thf10;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -120,7 +121,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         String descrip     = description.getText().toString();
         Price price        = new Price();
 
-        if (getNewPrice == null || getNewPrice.trim().equals(""))  {
+        if (getNewPrice.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
@@ -264,6 +265,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
      * Table to display the prices that were entered into the Firebase.
      * Aesthetics and lines were selected to be consistent with the other tables in the app.
      */
+    @SuppressLint("SetTextI18n")
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();

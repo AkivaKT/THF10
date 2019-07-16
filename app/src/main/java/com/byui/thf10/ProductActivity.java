@@ -5,6 +5,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -45,8 +46,6 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     private FireStore firedb;
     Context context;
 
-    private Button saveButton;
-    private Button sendButton;
     private Button deleteButton;
 
     private ArrayList<Product> productList = new ArrayList<>();
@@ -73,8 +72,8 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         name = findViewById(R.id.typeName);
         color1 = findViewById(R.id.typeColor1);
         color2 = findViewById(R.id.typeColor2);
-        saveButton = findViewById(R.id.SaveButton);
-        sendButton = findViewById(R.id.SendButton);
+        Button saveButton = findViewById(R.id.SaveButton);
+        Button sendButton = findViewById(R.id.SendButton);
         deleteButton = findViewById(R.id.deleteButton);
 
         spinner = findViewById(R.id.Quantity);
@@ -281,6 +280,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
     /***
      * update table. If there is any update by clicking one of buttons, update table on the product activity.
      */
+    @SuppressLint("SetTextI18n")
     private void updateTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();

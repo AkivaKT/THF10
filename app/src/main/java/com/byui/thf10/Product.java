@@ -10,23 +10,23 @@ public class Product extends JsonConvertible {
     private String quantity;
 
     // getters
-    public String getQuantity() { return quantity; }
+    String getQuantity() { return quantity; }
 
-    public String getColor1() {
+    String getColor1() {
         return color1;
     }
 
-    public String getColor2() {
+    String getColor2() {
         return color2;
     }
 
     public String getName() { return name; }
 
-    public String getSeries() {
+    String getSeries() {
         return series;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
@@ -44,7 +44,7 @@ public class Product extends JsonConvertible {
     }
 
     /**
-     * @name Ties have names that designate what kind of product they are.
+     * @param name Ties have names that designate what kind of product they are.
      */
     public void setName(String name) {
         this.name = name;
@@ -59,14 +59,14 @@ public class Product extends JsonConvertible {
     }
 
     /**
-     * @series Describes the group or collection that the ties come from.
+     * @param series Describes the group or collection that the ties come from.
      */
     public void setSeries(String series) {
         this.series = series;
     }
 
     /**
-     * @type Describes the type of Tie.
+     * @param type Describes the type of Tie.
      */
     public void setType(String type) {
         this.type = type;

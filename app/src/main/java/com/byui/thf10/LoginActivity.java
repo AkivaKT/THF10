@@ -1,5 +1,6 @@
 package com.byui.thf10;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -129,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Said table to display the sales.
      */
+    @SuppressLint("SetTextI18n")
     private void makeTable() {
         TableLayout tv = findViewById(R.id.table);
         tv.removeAllViewsInLayout();
