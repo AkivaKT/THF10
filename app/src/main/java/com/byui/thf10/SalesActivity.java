@@ -111,16 +111,18 @@ public class SalesActivity extends AppCompatActivity implements AdapterView.OnIt
         String getQuantity = Quantity.getText().toString();
         String getPrice = PriceSpinner.getSelectedItem().toString();
         String getProduct = ProductSpinner.getSelectedItem().toString();
+        String getAccount = AccountSpinner.getSelectedItem().toString();
 
         Sale sale = new Sale();
 
-        if (getQuantity == null || getQuantity.trim().equals("") || getProduct == null || getProduct.trim().equals("") || getPrice == null || getPrice.trim().equals(""))  {
+        if (getQuantity == null || getQuantity.trim().equals("") || getProduct == null || getProduct.trim().equals("") || getPrice == null || getPrice.trim().equals("") || getAccount == null || getAccount.trim().equals(""))  {
             Toast.makeText(getBaseContext(), "Input field is empty", Toast.LENGTH_LONG).show();
         }
         else {
             sale.setQuantity(getQuantity);
             sale.setPrice(getPrice);
             sale.setProduct(getProduct);
+            sale.setAccount(getAccount);
             salesList.add(sale);
             Log.i(TAG, "sdd Sale created.");
         }

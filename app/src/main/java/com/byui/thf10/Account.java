@@ -14,6 +14,7 @@ public class Account extends JsonConvertible {
     private String date;
 
 
+    // getters
     public String getFirstName() {
         return firstName;
     }
@@ -34,6 +35,8 @@ public class Account extends JsonConvertible {
 
     public String getDate() { return date; }
 
+    // setters
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -42,11 +45,25 @@ public class Account extends JsonConvertible {
         this.firstName = firstName;
     }
 
+    /**
+     * Describes the selected username
+     * @param userName The Usernames of all the members of the company
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Password of user
+     * @param newPassword will create the password for the user
+     */
+
     public void setPassword(String newPassword) { password = newPassword; }
+
+    /**
+     * Hash and Salt are for the purposes of encryption
+     * @param newSalt pairs with Hash
+     */
 
     public void setSalt(String newSalt) { salt = newSalt; }
 
