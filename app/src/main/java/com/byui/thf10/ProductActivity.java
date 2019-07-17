@@ -166,7 +166,7 @@ public class ProductActivity extends AppCompatActivity implements AdapterView.On
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Saved data to database.")
-                .setContentText("Just sent a product data.")
+                .setContentText("Just save a product data.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);

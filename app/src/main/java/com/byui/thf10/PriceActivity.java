@@ -413,7 +413,7 @@ public class PriceActivity extends AppCompatActivity implements AdapterView.OnIt
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Saved data to database.")
-                .setContentText("Just sent a price data.")
+                .setContentText("Just save a price data.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
